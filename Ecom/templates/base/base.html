@@ -1,0 +1,31 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %} {% endblock %}</title>
+
+    <link rel="preload" href="{% static 'css/semantic.min.css' %}" as="style">
+
+    <link rel="stylesheet" href="{% static 'css/semantic.min.css' %}">
+
+
+      {% block link %}
+      {% endblock %}
+  </head>
+
+  <body>
+    {% block content %}
+
+
+    {% endblock %}
+
+    <script src="{% static 'js/vue.global.js' %}" defer></script>
+    {% block scripts %}
+    {% endblock %}
+  </body>
+</html>
