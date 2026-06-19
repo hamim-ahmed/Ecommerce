@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'registration',
     'main',
-    # 'rest_framework',
-    # 'django_filter'
+    'rest_framework',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -58,13 +58,15 @@ ROOT_URLCONF = 'Ecom.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates',],   #to find base templates globally
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'main.context_processors.site_settings',
             ],
         },
     },
@@ -119,10 +121,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 import os
 STATIC_URL = 'static/'
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # ✅ external static folder
+    BASE_DIR / 'static',
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+# Media URL and Root Configuration
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
