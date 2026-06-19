@@ -1,4 +1,4 @@
-from .models import SiteSettings
+from .models import SiteSettings, Category
 
 
 def site_settings(request):     #to call sitSettings obj/recoed directly without doing these whole database calling process everytime.
@@ -9,6 +9,11 @@ def site_settings(request):     #to call sitSettings obj/recoed directly without
 
     settings_obj = SiteSettings.objects.first()
 
+    categories = Category.objects.filter(
+        is_active=True
+    )
+
     return {
-        'site_settings': settings_obj
+        'site_settings': settings_obj,
+        'categories': categories
     }

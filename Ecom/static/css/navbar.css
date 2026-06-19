@@ -1,0 +1,99 @@
+.main-header {
+    background: white;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.header-wrapper {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 15px 0;
+}
+
+.logo-section {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.site-logo {
+
+    width: 50px;
+
+    height: 50px;
+
+    object-fit: contain;
+}
+
+.site-name {
+
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+.search-section {
+
+    flex: 1;
+}
+
+.header-actions {
+
+    display: flex;
+
+    gap: 10px;
+}
+
+.main-navigation {
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.desktop-menu {
+
+    display: flex;
+
+    list-style: none;
+
+    padding: 0;
+
+    margin: 0;
+
+    gap: 25px;
+}
+
+.desktop-menu li {
+
+    padding: 15px 0;
+}
+
+.desktop-menu a {
+
+    color: #333;
+
+    font-weight: 600;
+}
+
+.mobile-menu-btn {
+
+    display: none;
+
+    background: none;
+
+    border: none;
+
+    font-size: 24px;
+
+    cursor: pointer;
+}

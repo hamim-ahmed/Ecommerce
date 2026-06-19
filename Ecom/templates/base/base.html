@@ -6,16 +6,32 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>
         {% block title %}
-            Ecommerce
+            {{ site_settings.site_name|default:"Ecommerce" }}
         {% endblock %}
     </title>
 
+    <!-- Semantic UI -->
     <link rel="stylesheet"
           href="{% static 'css/semantic.min.css' %}">
+
+    <!-- Project CSS -->
+    <link rel="stylesheet"
+          href="{% static 'css/base.css' %}">
+
+    <link rel="stylesheet"
+          href="{% static 'css/navbar.css' %}">
+
+    <link rel="stylesheet"
+          href="{% static 'css/product.css' %}">
+
+    <link rel="stylesheet"
+          href="{% static 'css/responsive.css' %}">
 
     {% block extra_css %}
     {% endblock %}
@@ -24,19 +40,164 @@
 
 <body>
 
-    <!-- Vue Application -->
+<div id="app">
 
-    <div id="app">
+    <!-- ========================= -->
+    <!-- Top Header -->
+    <!-- ========================= -->
+
+    <header>
+
+        <div class="main-header">
+
+            <div class="ui container">
+
+                <div class="header-wrapper">
+
+                    <!-- Mobile Menu Button -->
+
+                    <button id="mobile-menu-btn"
+                            class="mobile-menu-btn">
+
+                        ☰
+
+                    </button>
+
+                    <!-- Logo -->
+
+                    <div class="logo-section">
+
+                        {% if site_settings.logo %}
+
+                            <img
+                                src="{{ site_settings.logo.url }}"
+                                alt="{{ site_settings.site_name }}"
+                                class="site-logo">
+
+                        {% endif %}
+
+                        <span class="site-name">
+                            {{ site_settings.site_name }}
+                        </span>
+
+                    </div>
+
+                    <!-- Search -->
+
+                    <div class="search-section">
+
+                        <form>
+
+                            <div class="ui fluid icon input">
+
+                                <input type="text"
+                                       placeholder="Search products...">
+
+                                <i class="search icon"></i>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <!-- Right Actions -->
+
+                    <div class="header-actions">
+
+                        <a href="#"
+                           class="ui icon button">
+
+                            <i class="shopping cart icon"></i>
+
+                        </a>
+
+                        <a href="/admin/"
+                           class="ui primary button">
+
+                            Admin Login
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- Navigation Menu -->
+        <!-- ========================= -->
+
+        <nav class="main-navigation">
+
+            <div class="ui container">
+
+                <ul class="desktop-menu">
+
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    {% for category in categories %}
+
+                    <li>
+                        <a href="#">
+                            {{ category.name }}
+                        </a>
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!-- ========================= -->
+    <!-- Main Content -->
+    <!-- ========================= -->
+
+    <main>
 
         {% block content %}
         {% endblock %}
 
-    </div>
+    </main>
 
-    <script src="{% static 'js/vue.global.js' %}"></script>
+    <!-- ========================= -->
+    <!-- Footer -->
+    <!-- ========================= -->
 
-    {% block extra_js %}
-    {% endblock %}
+    <footer class="site-footer">
+
+        <div class="ui container">
+
+            <div class="footer-content">
+
+                <p>
+                    {{ site_settings.footer_text }}
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+</div>
+
+<!-- Vue -->
+
+<script src="{% static 'js/vue.global.js' %}"></script>
+
+{% block extra_js %}
+{% endblock %}
 
 </body>
 
