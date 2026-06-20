@@ -44,3 +44,28 @@
     }
 
 }
+
+
+
+
+
+
+@media screen and (max-width:768px) {
+
+    .hero-banner img {
+
+        height: 250px;
+    }
+
+    .hero-content {
+
+        left: 20px;
+        right: 20px;
+    }
+
+    .hero-content h1 {
+
+        font-size: 28px;
+    }
+
+}

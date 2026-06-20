@@ -6,16 +6,115 @@ Home
 
 {% block content %}
 
-<div class="ui container">
+<!-- Hero Banner -->
 
-    <h1 class="ui header">
-        Ecommerce Home
-    </h1>
+<section class="hero-section">
 
-    <p>
-        Project setup completed successfully.
-    </p>
+    <div class="ui container">
 
-</div>
+        {% for banner in banners %}
+
+            <div class="hero-banner">
+
+                <img src="{{ banner.image.url }}"
+                     alt="{{ banner.title }}">
+
+                <div class="hero-content">
+
+                    <h1>
+                        {{ banner.title }}
+                    </h1>
+
+                    <p>
+                        {{ banner.subtitle }}
+                    </p>
+
+                    {% if banner.button_text %}
+
+                        <a href="{{ banner.button_url }}"
+                           class="ui huge primary button">
+
+                            {{ banner.button_text }}
+
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <div class="ui placeholder segment">
+
+                <h3>
+                    No Banner Added Yet
+                </h3>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<!-- Featured Products -->
+
+<section class="featured-section">
+
+    <div class="ui container">
+
+        <h2 class="ui header">
+            Featured Products
+        </h2>
+
+        <div class="ui four stackable cards">
+
+            {% for product in featured_products %}
+
+                <div class="card">
+
+                    <div class="image">
+                        <a href="{% url 'product_detail' product.slug %}">
+                            <img src="{{ product.main_image.url }}" alt="{{ product.name }}">
+                        </a>
+
+                    </div>
+
+                    <div class="content">
+
+                        <div class="header">
+
+                            {{ product.name }}
+
+                        </div>
+
+                        <div class="description">
+
+                            ৳ {{ product.price }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <div class="ui message">
+
+                    No Featured Product Yet
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
 
 {% endblock %}

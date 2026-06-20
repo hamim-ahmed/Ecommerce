@@ -1,0 +1,84 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+Shopping Cart
+{% endblock %}
+
+{% block content %}
+
+<div class="ui container">
+
+    <h1 class="ui header">
+
+        Shopping Cart
+
+    </h1>
+
+    <div id="cart-page">
+
+        <table class="ui celled table">
+
+            <thead>
+
+            <tr>
+
+                <th>Product</th>
+
+                <th>Price</th>
+
+                <th>Quantity</th>
+
+                <th>Subtotal</th>
+
+                <th>Action</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody id="cart-table-body">
+
+            </tbody>
+
+        </table>
+
+        <div class="ui segment">
+
+            <h3>
+
+                Total:
+
+                ৳
+
+                <span id="cart-total">
+
+                    0
+
+                </span>
+
+            </h3>
+
+        </div>
+
+        <a href="/checkout/"
+           class="ui huge primary button">
+
+            Proceed To Checkout
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+
+loadCartPage();
+
+</script>
+
+{% endblock %}

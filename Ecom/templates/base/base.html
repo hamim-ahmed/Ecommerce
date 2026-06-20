@@ -10,6 +10,9 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
+    <meta name="csrf-token"
+      content="{{ csrf_token }}">
+
     <title>
         {% block title %}
             {{ site_settings.site_name|default:"Ecommerce" }}
@@ -105,10 +108,15 @@
 
                     <div class="header-actions">
 
-                        <a href="#"
-                           class="ui icon button">
+                        <a href="{% url 'cart' %}"
+                            class="ui icon button">
 
                             <i class="shopping cart icon"></i>
+
+                            <span id="cart-count"
+                                  class="cart-badge">
+                                0
+                            </span>
 
                         </a>
 
@@ -195,6 +203,14 @@
 <!-- Vue -->
 
 <script src="{% static 'js/vue.global.js' %}"></script>
+
+<script src="{% static 'js/axios.min.js' %}"></script>
+
+<script src="{% static 'js/cart.js' %}"></script>
+
+<script src="{% static 'js/api.js' %}"></script>
+
+<script src="{% static 'js/app.js' %}"></script>
 
 {% block extra_js %}
 {% endblock %}

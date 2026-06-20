@@ -1,0 +1,170 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block content %}
+
+<div class="ui container">
+
+    <h1 class="ui header">
+
+        Checkout
+
+    </h1>
+
+    <div class="ui stackable grid">
+
+        <!-- Customer Info -->
+
+        <div class="ten wide column">
+
+            <div class="ui form">
+
+                <div class="field">
+
+                    <label>
+
+                        Full Name
+
+                    </label>
+
+                    <input
+                        id="customer-name"
+                        type="text" required>
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+
+                        Phone
+
+                    </label>
+
+                    <input
+                        id="customer-phone"
+                        type="text" required>
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+
+                        Address
+
+                    </label>
+
+                    <textarea
+                        id="customer-address" required></textarea>
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+
+                        Delivery Area
+
+                    </label>
+
+                    <select
+                        id="delivery-area"
+                        onchange="updateDelivery()" required>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Order Summary -->
+
+        <div class="six wide column">
+
+            <div class="ui segment">
+
+                <h3>
+
+                    Order Summary
+
+                </h3>
+
+                <p>
+
+                    Subtotal:
+
+                    ৳
+
+                    <span id="subtotal">
+
+                        0
+
+                    </span>
+
+                </p>
+
+                <p>
+
+                    Delivery:
+
+                    ৳
+
+                    <span id="delivery-charge">
+
+                        0
+
+                    </span>
+
+                </p>
+
+                <hr>
+
+                <h2>
+
+                    Total:
+
+                    ৳
+
+                    <span id="grand-total">
+
+                        0
+
+                    </span>
+
+                </h2>
+
+                <button
+                    class="ui huge primary fluid button"
+                    onclick="placeOrder()">
+
+                    Place Order
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="{% static 'js/checkout.js' %}"></script>
+<script>
+
+loadCheckoutPage();
+
+</script>
+
+{% endblock %}

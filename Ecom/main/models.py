@@ -102,6 +102,10 @@ class Product(models.Model):
     stock = models.PositiveIntegerField(
         default=0
     )
+    sku = models.CharField(
+        max_length=100,
+        blank=True
+    )
 
     main_image = models.ImageField(
         upload_to='products/'
@@ -335,9 +339,6 @@ class SiteSettings(models.Model):
 
 
 class Banner(models.Model):
-    """
-    Homepage hero banners.
-    """
 
     title = models.CharField(
         max_length=255
@@ -365,6 +366,43 @@ class Banner(models.Model):
         default=0
     )
 
+    # NEW FIELD
+    open_in_new_tab = models.BooleanField(
+        default=False
+    )
+
+    is_active = models.BooleanField(
+        default=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        ordering = ['display_order']
+
+
+class DeliveryCharge(models.Model):
+    """
+    Delivery charge settings.
+
+    Usually only two rows:
+
+    Inside Dhaka
+    Outside Dhaka
+    """
+
+    area_name = models.CharField(
+        max_length=100,
+        unique=True
+    )
+
+    charge = models.DecimalField(
+        max_digits=10,
+        decimal_places=2
+    )
+
     is_active = models.BooleanField(
         default=True
     )
@@ -374,7 +412,8 @@ class Banner(models.Model):
     )
 
     def __str__(self):
-        return self.title
 
-    class Meta:
-        ordering = ['display_order']
+        return (
+            f"{self.area_name}"
+            f" - {self.charge}"
+        )

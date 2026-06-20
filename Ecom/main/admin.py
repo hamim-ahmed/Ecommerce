@@ -8,6 +8,7 @@ from .models import (
     Notification,
     SiteSettings,
     Banner,
+    DeliveryCharge,
 )
 
 
@@ -70,8 +71,10 @@ class ProductAdmin(admin.ModelAdmin):
         'id',
         'name',
         'category',
+        'slug',
         'price',
         'stock',
+        'sku',
         'is_featured',
         'is_active',
         'created_at',
@@ -261,4 +264,21 @@ class BannerAdmin(admin.ModelAdmin):
 
     ordering = (
         'display_order',
+    )
+
+
+@admin.register(DeliveryCharge)
+class DeliveryChargeAdmin(
+    admin.ModelAdmin
+):
+
+    list_display = (
+        'area_name',
+        'charge',
+        'is_active',
+    )
+
+    list_editable = (
+        'charge',
+        'is_active',
     )

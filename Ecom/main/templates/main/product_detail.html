@@ -1,0 +1,139 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+{{ product.name }}
+{% endblock %}
+
+{% block content %}
+
+<div class="ui container">
+
+    <div class="ui stackable grid">
+
+        <!-- Product Image -->
+
+        <div class="eight wide column">
+
+            <img src="{{ product.main_image.url }}"
+                 class="ui fluid rounded image"
+                 alt="{{ product.name }}">
+
+        </div>
+
+        <!-- Product Info -->
+
+        <div class="eight wide column">
+
+            <h1>
+                {{ product.name }}
+            </h1>
+
+            <h2 class="product-price">
+
+                ৳ {{ product.price }}
+
+            </h2>
+
+            {% if product.sku %}
+
+                <p>
+
+                    <strong>SKU:</strong>
+
+                    {{ product.sku }}
+
+                </p>
+
+            {% endif %}
+
+            <p>
+
+                {{ product.description }}
+
+            </p>
+
+            <div class="ui form">
+
+                <div class="field">
+
+                    <label>
+                        Quantity
+                    </label>
+
+                    <input type="number"
+                           min="1"
+                           value="1">
+
+                </div>
+
+            </div>
+
+            <button
+                class="ui huge primary button"
+
+                onclick="addToCart(
+                    {{ product.id }},
+                    '{{ product.name|escapejs }}',
+                    '{{ product.slug }}',
+                    '{{ product.price }}',
+                    '{{ product.main_image.url }}'
+                )">
+
+                Add To Cart
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Related Products -->
+
+    <div class="related-products">
+
+        <h2 class="ui header">
+
+            Related Products
+
+        </h2>
+
+        <div class="ui four stackable cards">
+
+            {% for item in related_products %}
+
+                <div class="card">
+
+                    <div class="image">
+
+                        <img src="{{ item.main_image.url }}"
+                             alt="{{ item.name }}">
+
+                    </div>
+
+                    <div class="content">
+
+                        <div class="header">
+
+                            {{ item.name }}
+
+                        </div>
+
+                        <div class="description">
+
+                            ৳ {{ item.price }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
