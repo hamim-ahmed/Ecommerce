@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="ui container">
+
+    <h1 class="ui header">
+
+        Admin Dashboard
+
+    </h1>
+
+    <div
+        class="ui stackable four cards"
+
+        id="dashboard-cards">
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="{% static 'js/admin_dashboard.js' %}">
+</script>
+
+<script>
+
+    loadDashboard();
+
+</script>
+
+{% endblock %}

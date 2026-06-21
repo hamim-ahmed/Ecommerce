@@ -73,6 +73,7 @@ class ProductAdmin(admin.ModelAdmin):
         'category',
         'slug',
         'price',
+        'main_image',
         'stock',
         'sku',
         'is_featured',
@@ -128,7 +129,64 @@ class OrderItemInline(admin.TabularInline):
 
     can_delete = False
 
+# ==========================================================
+# ORDER ADMIN ACTIONS
+# ==========================================================
 
+@admin.action(
+    description='Mark selected orders as Confirmed'
+)
+def mark_confirmed(
+    modeladmin,
+    request,
+    queryset
+):
+
+    queryset.update(
+        status='confirmed'
+    )
+
+
+@admin.action(
+    description='Mark selected orders as Processing'
+)
+def mark_processing(
+    modeladmin,
+    request,
+    queryset
+):
+
+    queryset.update(
+        status='processing'
+    )
+
+
+@admin.action(
+    description='Mark selected orders as Delivered'
+)
+def mark_delivered(
+    modeladmin,
+    request,
+    queryset
+):
+
+    queryset.update(
+        status='delivered'
+    )
+
+
+@admin.action(
+    description='Mark selected orders as Cancelled'
+)
+def mark_cancelled(
+    modeladmin,
+    request,
+    queryset
+):
+
+    queryset.update(
+        status='cancelled'
+    )
 # ==========================================================
 # Order Admin
 # ==========================================================
@@ -140,12 +198,11 @@ class OrderAdmin(admin.ModelAdmin):
         'id',
         'customer_name',
         'phone',
+        'status',
+        'subtotal',
+        'delivery_charge',
         'total_amount',
-        'status',
         'created_at',
-    )
-    list_editable = (
-        'status',
     )
 
     list_filter = (
@@ -156,15 +213,28 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = (
         'customer_name',
         'phone',
-        'address',
     )
 
-    ordering = (
-        '-created_at',
+    readonly_fields = (
+        'subtotal',
+        'delivery_charge',
+        'total_amount',
+        'created_at',
+        'updated_at',
     )
+    actions = [
+
+        mark_confirmed,
+
+        mark_processing,
+
+        mark_delivered,
+
+        mark_cancelled,
+    ]
 
     inlines = [
-        OrderItemInline
+        OrderItemInline,
     ]
 
 # ==========================================================

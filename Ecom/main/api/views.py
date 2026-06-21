@@ -21,14 +21,17 @@ APIView
       ↓
 Database
 """
-
+from django.shortcuts import get_object_or_404
 from rest_framework import generics
+from rest_framework.generics import get_object_or_404
 
 # Relative imports
 from ..models import (
     Category,
     Product,
     DeliveryCharge,
+    Order,
+    Notification,
 )
 
 from .serializers import (
@@ -42,6 +45,12 @@ from .serializers import (
     OrderCreateSerializer,
 
     DeliveryChargeSerializer,
+
+    AdminDashboardSerializer,
+
+    AdminOrderListSerializer,
+
+    AdminOrderDetailSerializer,
 )
 
 
@@ -230,3 +239,144 @@ class DeliveryChargeListAPIView(
     serializer_class = (
         DeliveryChargeSerializer
     )
+
+
+
+
+# ==========================================================
+# ADMIN DASHBOARD API
+# ==========================================================
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+class AdminDashboardAPIView(
+    APIView
+):
+    """
+    Returns dashboard statistics.
+    """
+
+    def get(
+        self,
+        request
+    ):
+        data = {
+
+            'pending_orders':
+                Order.objects.filter(
+                    status='pending'
+                ).count(),
+
+            'confirmed_orders':
+                Order.objects.filter(
+                    status='confirmed'
+                ).count(),
+
+            'processing_orders':
+                Order.objects.filter(
+                    status='processing'
+                ).count(),
+
+            'delivered_orders':
+                Order.objects.filter(
+                    status='delivered'
+                ).count(),
+
+            'cancelled_orders':
+                Order.objects.filter(
+                    status='cancelled'
+                ).count(),
+        }
+
+        serializer = (
+            AdminDashboardSerializer(
+                data
+            )
+        )
+
+        return Response(
+            serializer.data
+        )
+
+
+
+# ==========================================================
+# ADMIN ORDERS LIST API
+# ==========================================================
+
+class AdminOrderListAPIView(
+    APIView
+):
+    """
+    GET
+
+    /api/admin/orders/
+
+    /api/admin/orders/?status=pending
+    """
+
+    def get(
+        self,
+        request
+    ):
+
+        queryset = (
+            Order.objects
+            .all()
+            .order_by('-created_at')
+        )
+
+        status_filter = (
+            request.GET.get(
+                'status'
+            )
+        )
+
+        if status_filter:
+
+            queryset = queryset.filter(
+                status=status_filter
+            )
+
+        serializer = (
+            AdminOrderListSerializer(
+                queryset,
+                many=True
+            )
+        )
+
+        return Response(
+            serializer.data
+        )
+
+
+# ==========================================================
+# ADMIN ORDER DETAIL API
+# ==========================================================
+
+class AdminOrderDetailAPIView(
+    APIView
+):
+
+    def get(
+        self,
+        request,
+        order_id
+    ):
+
+        order = get_object_or_404(
+
+            Order,
+
+            pk=order_id
+        )
+
+        serializer = (
+            AdminOrderDetailSerializer(
+                order
+            )
+        )
+
+        return Response(
+            serializer.data
+        )

@@ -109,3 +109,37 @@ def order_success_page(request):
         request,
         'main/order_success.html'
     )
+
+def admin_dashboard_page(request):
+
+    return render(
+        request,
+        'main/admin/dashboard.html'
+    )
+
+def admin_orders_page(request):
+
+    return render(
+        request,
+        'main/admin/orders.html'
+    )
+
+# ==========================================================
+# ADMIN ORDER DETAIL PAGE
+# ==========================================================
+
+def admin_order_detail_page(
+    request,
+    order_id
+):
+
+    return render(
+
+        request,
+
+        'main/admin/order_detail.html',
+
+        {
+            'order_id': order_id
+        }
+    )

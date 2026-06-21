@@ -50,4 +50,24 @@ urlpatterns = [
         views.order_success_page,
         name='order_success'
     ),
+
+    path(
+        'admin-panel/dashboard/',
+        views.admin_dashboard_page,
+        name='admin_dashboard_page'
+    ),
+
+    path(
+        'admin-panel/orders/',
+        views.admin_orders_page,
+        name='admin_orders_page'
+    ),
+
+    path(
+        'admin-panel/orders/<int:order_id>/',
+
+        views.admin_order_detail_page,
+
+        name='admin_order_detail_page'
+    ),
 ]

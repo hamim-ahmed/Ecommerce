@@ -42,6 +42,12 @@ from .views import (
     OrderCreateAPIView,
 
     DeliveryChargeListAPIView,
+
+    AdminDashboardAPIView,
+
+    AdminOrderListAPIView,
+
+    AdminOrderDetailAPIView,
 )
 
 
@@ -145,4 +151,23 @@ urlpatterns = [
         name='api_delivery_charges'
     ),
 
+    path(
+        'admin/dashboard/',
+        AdminDashboardAPIView.as_view(),
+        name='admin_dashboard'
+    ),
+
+    path(
+        'admin/orders/',
+        AdminOrderListAPIView.as_view(),
+        name='admin_orders'
+    ),
+
+    path(
+        'admin/orders/<int:order_id>/',
+
+        AdminOrderDetailAPIView.as_view(),
+
+        name='admin_order_detail'
+    ),
 ]

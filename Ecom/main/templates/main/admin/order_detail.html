@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %}
+Order Details
+{% endblock %}
+
+{% block content %}
+
+<div class="ui container">
+
+    <div id="order-detail-container">
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+
+    const ORDER_ID =
+        {{ order_id }};
+
+</script>
+
+<script
+    src="{% static 'js/admin_order_detail.js' %}">
+</script>
+
+<script>
+
+    loadOrderDetail();
+
+</script>
+
+{% endblock %}

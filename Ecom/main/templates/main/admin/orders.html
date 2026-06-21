@@ -1,0 +1,136 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %}
+Orders
+{% endblock %}
+
+{% block content %}
+
+<div class="ui container">
+
+    <h1 class="ui header">
+
+        Order Management
+
+    </h1>
+
+    <!-- ===================================== -->
+    <!-- FILTER BAR -->
+    <!-- ===================================== -->
+
+    <div class="ui stackable grid">
+
+        <div class="eight wide column">
+
+            <div class="ui icon input fluid">
+
+                <input
+                    type="text"
+                    id="order-search"
+                    placeholder="Search customer, phone or order id..."
+                >
+
+                <i class="search icon"></i>
+
+            </div>
+
+        </div>
+
+        <div class="eight wide column">
+
+            <select
+                id="status-filter"
+                class="ui dropdown fluid"
+            >
+
+                <option value="">
+                    All Orders
+                </option>
+
+                <option value="pending">
+                    Pending
+                </option>
+
+                <option value="confirmed">
+                    Confirmed
+                </option>
+
+                <option value="processing">
+                    Processing
+                </option>
+
+                <option value="delivered">
+                    Delivered
+                </option>
+
+                <option value="cancelled">
+                    Cancelled
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <!-- ===================================== -->
+    <!-- ORDERS TABLE -->
+    <!-- ===================================== -->
+
+    <table
+        class="
+            ui celled
+            striped
+            table
+        "
+    >
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Customer</th>
+
+                <th>Phone</th>
+
+                <th>Total</th>
+
+                <th>Status</th>
+
+                <th>Date</th>
+
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="orders-table-body">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script
+    src="{% static 'js/admin_orders.js' %}">
+</script>
+
+<script>
+
+    loadOrders();
+
+</script>
+
+{% endblock %}

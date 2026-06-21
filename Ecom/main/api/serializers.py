@@ -473,3 +473,139 @@ class DeliveryChargeSerializer(
             'area_name',
             'charge',
         ]
+
+
+# ==========================================================
+# ADMIN DASHBOARD SERIALIZER
+# ==========================================================
+
+class AdminDashboardSerializer(
+    serializers.Serializer
+):
+
+    pending_orders = serializers.IntegerField()
+
+    confirmed_orders = serializers.IntegerField()
+
+    processing_orders = serializers.IntegerField()
+
+    delivered_orders = serializers.IntegerField()
+
+    cancelled_orders = serializers.IntegerField()
+
+
+
+
+
+
+# ==========================================================
+# ADMIN ORDER LIST SERIALIZER
+# ==========================================================
+
+class AdminOrderListSerializer(
+    serializers.ModelSerializer
+):
+    """
+    Used for:
+
+    /api/admin/orders/
+
+    Returns lightweight
+    order information
+    for the table view.
+    """
+
+    class Meta:
+
+        model = Order
+
+        fields = [
+
+            'id',
+
+            'customer_name',
+
+            'phone',
+
+            'status',
+
+            'subtotal',
+
+            'delivery_charge',
+
+            'total_amount',
+
+            'created_at'
+        ]
+
+
+
+# ==========================================================
+# ADMIN ORDER ITEM SERIALIZER
+# ==========================================================
+
+class AdminOrderItemSerializer(
+    serializers.ModelSerializer
+):
+
+    class Meta:
+
+        model = OrderItem
+
+        fields = [
+
+            'id',
+
+            'product_name',
+
+            'quantity',
+
+            'unit_price',
+
+            'subtotal'
+        ]
+
+
+# ==========================================================
+# ADMIN ORDER DETAIL SERIALIZER
+# ==========================================================
+
+class AdminOrderDetailSerializer(
+    serializers.ModelSerializer
+):
+
+    items = (
+        AdminOrderItemSerializer(
+            many=True,
+            read_only=True
+        )
+    )
+
+    class Meta:
+
+        model = Order
+
+        fields = [
+
+            'id',
+
+            'customer_name',
+
+            'phone',
+
+            'address',
+
+            'note',
+
+            'status',
+
+            'subtotal',
+
+            'delivery_charge',
+
+            'total_amount',
+
+            'created_at',
+
+            'items'
+        ]
