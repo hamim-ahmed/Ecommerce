@@ -609,3 +609,19 @@ class AdminOrderDetailSerializer(
 
             'items'
         ]
+
+# ==========================================================
+# ORDER STATUS UPDATE
+# ==========================================================
+
+class OrderStatusUpdateSerializer(
+    serializers.ModelSerializer
+):
+
+    class Meta:
+
+        model = Order
+
+        fields = [
+            'status'
+        ]

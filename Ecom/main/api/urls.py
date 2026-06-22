@@ -48,6 +48,8 @@ from .views import (
     AdminOrderListAPIView,
 
     AdminOrderDetailAPIView,
+
+    OrderStatusUpdateAPIView
 )
 
 
@@ -169,5 +171,13 @@ urlpatterns = [
         AdminOrderDetailAPIView.as_view(),
 
         name='admin_order_detail'
+    ),
+
+    path(
+        'admin/orders/<int:order_id>/status/',
+
+        OrderStatusUpdateAPIView.as_view(),
+
+        name='admin_order_status_update'
     ),
 ]

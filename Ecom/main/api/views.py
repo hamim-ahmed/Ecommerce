@@ -51,6 +51,8 @@ from .serializers import (
     AdminOrderListSerializer,
 
     AdminOrderDetailSerializer,
+
+    OrderStatusUpdateSerializer
 )
 
 
@@ -380,3 +382,48 @@ class AdminOrderDetailAPIView(
         return Response(
             serializer.data
         )
+
+
+# ==========================================================
+# UPDATE ORDER STATUS
+# ==========================================================
+
+class OrderStatusUpdateAPIView(
+    APIView
+):
+
+    def patch(
+        self,
+        request,
+        order_id
+    ):
+
+        order = get_object_or_404(
+
+            Order,
+
+            pk=order_id
+        )
+
+        serializer = (
+            OrderStatusUpdateSerializer(
+
+                order,
+
+                data=request.data,
+
+                partial=True
+            )
+        )
+
+        serializer.is_valid(
+            raise_exception=True
+        )
+
+        serializer.save()
+
+        return Response({
+
+            'message':
+                'Order updated successfully.'
+        })
