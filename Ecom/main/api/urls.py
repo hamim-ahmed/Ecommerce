@@ -49,7 +49,11 @@ from .views import (
 
     AdminOrderDetailAPIView,
 
-    OrderStatusUpdateAPIView
+    OrderStatusUpdateAPIView,
+
+    AdminNotificationListAPIView,
+
+    NotificationReadAPIView,
 )
 
 
@@ -180,4 +184,21 @@ urlpatterns = [
 
         name='admin_order_status_update'
     ),
+
+    path(
+        'admin/notifications/',
+
+        AdminNotificationListAPIView.as_view(),
+
+        name='admin_notifications'
+    ),
+
+    path(
+        'admin/notifications/<int:notification_id>/read/',
+
+        NotificationReadAPIView.as_view(),
+
+        name='notification_read'
+    ),
+
 ]

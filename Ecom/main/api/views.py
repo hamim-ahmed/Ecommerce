@@ -52,7 +52,9 @@ from .serializers import (
 
     AdminOrderDetailSerializer,
 
-    OrderStatusUpdateSerializer
+    OrderStatusUpdateSerializer,
+
+    NotificationSerializer,
 )
 
 
@@ -426,4 +428,69 @@ class OrderStatusUpdateAPIView(
 
             'message':
                 'Order updated successfully.'
+        })
+
+
+
+# ==================================================
+# ADMIN NOTIFICATIONS
+# ==================================================
+
+class AdminNotificationListAPIView(
+    generics.ListAPIView
+):
+
+    serializer_class = (
+        NotificationSerializer
+    )
+
+    def get_queryset(self):
+
+        return (
+
+            Notification.objects
+
+            .filter(
+                is_read=False
+            )
+
+            .order_by(
+                '-created_at'
+            )[:10]
+
+        )
+
+
+# ==================================================
+# MARK NOTIFICATION READ
+# ==================================================
+
+class NotificationReadAPIView(
+    APIView
+):
+
+    def patch(
+        self,
+        request,
+        notification_id
+    ):
+
+        notification = (
+            get_object_or_404(
+
+                Notification,
+
+                pk=notification_id
+
+            )
+        )
+
+        notification.is_read = True
+
+        notification.save()
+
+        return Response({
+
+            'message':
+                'Notification updated.'
         })

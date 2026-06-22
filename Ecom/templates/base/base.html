@@ -110,6 +110,36 @@
 
                     <div class="header-actions">
 
+                        <div class="notification-wrapper">
+
+                            <button
+                                id="notification-btn"
+
+                                class="ui icon button">
+
+                                🔔
+
+                                <span
+                                    id="notification-count"
+
+                                    class="notification-badge">
+
+                                    0
+
+                                </span>
+
+                            </button>
+
+                            <div
+                                id="notification-dropdown"
+
+                                class="notification-dropdown">
+
+                            </div>
+
+                        </div>
+
+
                         <a href="{% url 'cart' %}"
                             class="ui icon button">
 
@@ -208,11 +238,13 @@
 
 <script src="{% static 'js/axios.min.js' %}"></script>
 
-<script src="{% static 'js/cart.js' %}"></script>
-
 <script src="{% static 'js/api.js' %}"></script>
 
+<script src="{% static 'js/admin_notifications.js' %}"></script>
+
 <script src="{% static 'js/app.js' %}"></script>
+
+<script src="{% static 'js/cart.js' %}"></script>
 
 {% block extra_js %}
 {% endblock %}

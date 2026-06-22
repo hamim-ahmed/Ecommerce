@@ -625,3 +625,25 @@ class OrderStatusUpdateSerializer(
         fields = [
             'status'
         ]
+
+
+
+# ==================================================
+# NOTIFICATION SERIALIZER
+# ==================================================
+
+class NotificationSerializer(
+    serializers.ModelSerializer
+):
+
+    class Meta:
+
+        model = Notification
+
+        fields = [
+            'id',
+            'title',
+            'message',
+            'is_read',
+            'created_at'
+        ]
