@@ -27,9 +27,16 @@ Orders
             <div class="ui icon input fluid">
 
                 <input
-                    type="text"
+
                     id="order-search"
-                    placeholder="Search customer, phone or order id..."
+
+                    type="text"
+
+                    placeholder="
+                        Search customer,
+                        phone or order id...
+                    "
+
                 >
 
                 <i class="search icon"></i>
@@ -41,8 +48,11 @@ Orders
         <div class="eight wide column">
 
             <select
+
                 id="status-filter"
-                class="ui dropdown fluid"
+
+                class="ui dropdown"
+
             >
 
                 <option value="">
@@ -116,6 +126,51 @@ Orders
         </tbody>
 
     </table>
+
+    <!--
+==================================================
+ORDER PREVIEW MODAL
+==================================================
+-->
+
+    <div
+        id="order-preview-modal"
+        class="custom-modal"
+        style="display:none;"
+    >
+
+        <div class="custom-modal-content">
+
+            <button
+                onclick="
+                    document
+                    .getElementById(
+                        'order-preview-modal'
+                    )
+                    .style.display='none'
+                "
+                class="ui red button"
+            >
+
+                Close
+
+            </button>
+
+            <h3>
+
+                Order Preview
+
+            </h3>
+
+            <div
+                id="order-preview-content"
+            >
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

@@ -54,6 +54,10 @@ from .views import (
     AdminNotificationListAPIView,
 
     NotificationReadAPIView,
+
+    NotificationCountAPIView,
+
+    MarkAllNotificationsReadAPIView,
 )
 
 
@@ -200,5 +204,18 @@ urlpatterns = [
 
         name='notification_read'
     ),
+    path(
+        'admin/notifications/count/',
+
+        NotificationCountAPIView.as_view(),
+
+        name='notification_count'
+    ),
+
+    path(
+            'admin/notifications/read-all/',
+            MarkAllNotificationsReadAPIView.as_view(),
+            name='notification_read_all'
+        ),
 
 ]

@@ -208,6 +208,33 @@ class Order(models.Model):
         default='pending'
     )
 
+    # ==================================================
+    # ORDER TIMELINE FIELDS
+    # ==================================================
+    # These timestamps allow us
+    # to show a timeline in the
+    # admin order details page.
+    #
+
+    confirmed_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    processing_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    delivered_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
+
+    cancelled_at = models.DateTimeField(
+        null=True,
+        blank=True
+    )
     created_at = models.DateTimeField(
         auto_now_add=True
     )

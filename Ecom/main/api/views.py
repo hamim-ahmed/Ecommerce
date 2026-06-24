@@ -448,13 +448,16 @@ class AdminNotificationListAPIView(
 
         return (
 
-            Notification.objects
-
-            .filter(
-                is_read=False
-            )
-
-            .order_by(
+            # Notification.objects
+            #
+            # .filter(
+            #     is_read=False
+            # )
+            #
+            # .order_by(
+            #     '-created_at'
+            # )[:10]
+            Notification.objects.order_by(
                 '-created_at'
             )[:10]
 
@@ -493,4 +496,59 @@ class NotificationReadAPIView(
 
             'message':
                 'Notification updated.'
+        })
+
+
+# ==================================================
+# UNREAD NOTIFICATION COUNT
+# ==================================================
+
+class NotificationCountAPIView(
+    APIView
+):
+
+    def get(
+        self,
+        request
+    ):
+
+        count = (
+
+            Notification.objects
+
+            .filter(
+                is_read=False
+            )
+
+            .count()
+        )
+
+        return Response({
+
+            'count': count
+
+        })
+
+
+
+class MarkAllNotificationsReadAPIView(
+    APIView
+):
+
+    def patch(
+        self,
+        request
+    ):
+
+        Notification.objects.filter(
+            is_read=False
+        ).update(
+            is_read=True
+        )
+
+        return Response({
+
+            'message':
+                'Notifications marked as read.'
+
         })

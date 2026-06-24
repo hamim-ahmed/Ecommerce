@@ -424,9 +424,7 @@ class OrderCreateSerializer(
         # --------------------------------------------------
 
         Notification.objects.create(
-
             title='New Order Received',
-
             message=(
                 f'Order #{order.id} '
                 f'received from '
@@ -586,33 +584,41 @@ class AdminOrderDetailSerializer(
         model = Order
 
         fields = [
+        'id',
 
-            'id',
+        'customer_name',
 
-            'customer_name',
+        'phone',
 
-            'phone',
+        'address',
 
-            'address',
+        'subtotal',
 
-            'note',
+        'delivery_charge',
 
-            'status',
+        'total_amount',
 
-            'subtotal',
+        'status',
 
-            'delivery_charge',
+        'created_at',
 
-            'total_amount',
+        'confirmed_at',
 
-            'created_at',
+        'processing_at',
 
-            'items'
+        'delivered_at',
+
+        'cancelled_at',
+
+        'items'
         ]
 
 # ==========================================================
 # ORDER STATUS UPDATE
 # ==========================================================
+
+from django.utils import timezone
+from django.utils.timezone import localtime
 
 class OrderStatusUpdateSerializer(
     serializers.ModelSerializer
@@ -626,24 +632,96 @@ class OrderStatusUpdateSerializer(
             'status'
         ]
 
+    def update(
+        self,
+        instance,
+        validated_data
+    ):
+
+        new_status = validated_data.get(
+            'status'
+        )
+
+        # ----------------------------------
+        # Save status change timestamps
+        # ----------------------------------
+
+        if new_status == 'confirmed':
+
+            if not instance.confirmed_at:
+
+                instance.confirmed_at = (
+                    localtime(timezone.now())
+                )
+
+        elif new_status == 'processing':
+
+            if not instance.processing_at:
+
+                instance.processing_at = (
+                    localtime(timezone.now())
+                )
+
+        elif new_status == 'delivered':
+
+            if not instance.delivered_at:
+
+                instance.delivered_at = (
+                    localtime(timezone.now())
+                )
+
+        elif new_status == 'cancelled':
+
+            if not instance.cancelled_at:
+
+                instance.cancelled_at = (
+                    localtime(timezone.now())
+                )
+
+        instance.status = new_status
+
+        instance.save()
+
+        return instance
 
 
 # ==================================================
 # NOTIFICATION SERIALIZER
 # ==================================================
 
+import re
+
+
 class NotificationSerializer(
     serializers.ModelSerializer
 ):
+
+    order_id = (
+        serializers.SerializerMethodField()
+    )
 
     class Meta:
 
         model = Notification
 
-        fields = [
-            'id',
-            'title',
-            'message',
-            'is_read',
-            'created_at'
-        ]
+        fields = '__all__'
+
+    def get_order_id(
+        self,
+        obj
+    ):
+
+        match = re.search(
+
+            r'Order #(\d+)',
+
+            obj.message
+        )
+
+        if match:
+
+            return int(
+                match.group(1)
+            )
+
+        return None

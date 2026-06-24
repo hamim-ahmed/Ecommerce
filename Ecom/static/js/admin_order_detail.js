@@ -1,8 +1,38 @@
 /*
 ==================================================
+FORMAT DATETIME
+==================================================
+
+Converts Django datetime
+to local readable format.
+*/
+
+function formatDateTime(
+    dateValue
+) {
+
+    if (!dateValue) {
+
+        return '-';
+    }
+
+    return new Date(
+
+        dateValue
+
+    ).toLocaleString();
+}
+
+
+
+
+/*
+==================================================
 ADMIN ORDER DETAIL
 ==================================================
 */
+
+
 
 function loadOrderDetail() {
 
@@ -188,6 +218,198 @@ function renderOrderDetail(
                         Order Summary
 
                     </h3>
+                    
+                    
+                    
+                    <div
+                        class="
+                            ui
+                            segment
+                        "
+                    >
+                    
+                        <h3>
+                    
+                            Order Timeline
+                    
+                        </h3>
+                    
+                        <div
+                            class="
+                                ui
+                                relaxed
+                                list
+                            "
+                        >
+                    
+                            <div class="item">
+                    
+                                <i
+                                    class="
+                                        plus
+                                        circle
+                                        green
+                                        icon
+                                    "
+                                ></i>
+                    
+                                <div
+                                    class="content"
+                                >
+                    
+                                    Created
+                    
+                                    <div
+                                        class="
+                                            description
+                                        "
+                                    >
+                    
+                                        ${formatDateTime(
+                                            order.created_at
+                                        )}
+                    
+                                    </div>
+                    
+                                </div>
+                    
+                            </div>
+                    
+                            <div class="item">
+                    
+                                <i
+                                    class="
+                                        check
+                                        blue
+                                        icon
+                                    "
+                                ></i>
+                    
+                                <div
+                                    class="content"
+                                >
+                    
+                                    Confirmed
+                    
+                                    <div
+                                        class="
+                                            description
+                                        "
+                                    >
+                    
+                                        ${formatDateTime(
+                                            order.confirmed_at
+                                        )}
+                    
+                                    </div>
+                    
+                                </div>
+                    
+                            </div>
+                    
+                            <div class="item">
+                    
+                                <i
+                                    class="
+                                        cog
+                                        orange
+                                        icon
+                                    "
+                                ></i>
+                    
+                                <div
+                                    class="content"
+                                >
+                    
+                                    Processing
+                    
+                                    <div
+                                        class="
+                                            description
+                                        "
+                                    >
+                    
+                                        ${formatDateTime(
+                                            order.processing_at
+                                        )}
+                    
+                                    </div>
+                    
+                                </div>
+                    
+                            </div>
+                    
+                            <div class="item">
+                    
+                                <i
+                                    class="
+                                        truck
+                                        green
+                                        icon
+                                    "
+                                ></i>
+                    
+                                <div
+                                    class="content"
+                                >
+                    
+                                    Delivered
+                    
+                                    <div
+                                        class="
+                                            description
+                                        "
+                                    >
+                    
+                                        ${formatDateTime(
+                                            order.delivered_at
+                                        )}
+                    
+                                    </div>
+                    
+                                </div>
+                    
+                            </div>
+                    
+                            <div class="item">
+                    
+                                <i
+                                    class="
+                                        close
+                                        red
+                                        icon
+                                    "
+                                ></i>
+                    
+                                <div
+                                    class="content"
+                                >
+                    
+                                    Cancelled
+                    
+                                    <div
+                                        class="
+                                            description
+                                        "
+                                    >
+                    
+                                        ${formatDateTime(
+                                            order.cancelled_at
+                                        )}
+                    
+                                    </div>
+                    
+                                </div>
+                    
+                            </div>
+                    
+                        </div>
+                    
+                    </div>
+                    
+                    
+                    
+                    
 
                     <p>
 
