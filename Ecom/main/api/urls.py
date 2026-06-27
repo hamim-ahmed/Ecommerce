@@ -58,6 +58,8 @@ from .views import (
     NotificationCountAPIView,
 
     MarkAllNotificationsReadAPIView,
+
+    BannerListAPIView,
 )
 
 
@@ -85,6 +87,16 @@ urlpatterns = [
         CategoryListAPIView.as_view(),
 
         name='api_categories'
+    ),
+
+    path(
+
+        'banners/',
+
+        BannerListAPIView.as_view(),
+
+        name='api-banners'
+
     ),
 
     # ==================================================

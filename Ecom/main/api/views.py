@@ -32,6 +32,7 @@ from ..models import (
     DeliveryCharge,
     Order,
     Notification,
+    Banner,
 )
 
 from .serializers import (
@@ -55,6 +56,8 @@ from .serializers import (
     OrderStatusUpdateSerializer,
 
     NotificationSerializer,
+
+    BannerSerializer,
 )
 
 
@@ -97,6 +100,35 @@ class CategoryListAPIView(generics.ListAPIView):
     serializer_class = CategorySerializer
 
 
+
+class BannerListAPIView(
+    generics.ListAPIView
+):
+    """
+    Homepage Banner API
+
+    Returns all active banners
+    ordered by display_order.
+    """
+
+    serializer_class = BannerSerializer
+
+    queryset = (
+
+        Banner.objects
+
+        .filter(
+            is_active=True
+        )
+
+        .order_by(
+            'display_order'
+        )
+
+    )
+
+
+
 # ==========================================================
 # PRODUCT LIST API
 # ==========================================================
@@ -105,29 +137,46 @@ class ProductListAPIView(
     generics.ListAPIView
 ):
     """
-    Returns all active products.
+    Returns products.
 
-    Example:
+    Supports:
 
-    /api/products/
+        /api/products/
 
-    Used by:
-
-        Product Listing Page
-
-        Search Results
-
-        Category Pages
+        /api/products/?category=3
     """
-
-    queryset = Product.objects.filter(
-        is_active=True
-    ).select_related(
-        'category'
-    )
 
     serializer_class = ProductSerializer
 
+    def get_queryset(self):
+
+        queryset = (
+
+            Product.objects
+
+            .filter(
+                is_active=True
+            )
+
+            .select_related(
+                'category'
+            )
+
+        )
+
+        category = self.request.GET.get(
+            'category'
+        )
+
+        if category:
+
+            queryset = queryset.filter(
+
+                category_id=category
+
+            )
+
+        return queryset
 
 # ==========================================================
 # PRODUCT DETAIL API

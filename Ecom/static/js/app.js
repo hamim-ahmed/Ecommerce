@@ -6,11 +6,29 @@ MAIN VUE APPLICATION
 
 const app = Vue.createApp({
 
+    delimiters: [
+
+        '[[',
+
+        ']]'
+
+    ],
+
     data() {
 
         return {
 
             categories: [],
+
+            products: [],
+
+            banners: [],
+
+            currentBanner: 0,
+
+            bannerInterval: null,
+
+            selectedCategory: null,
 
             cartCount: 0,
         }
@@ -47,33 +65,333 @@ const app = Vue.createApp({
 
         /*
         --------------------------------------
+        Load Homepage Banners
+        --------------------------------------
+        */
+
+        loadBanners() {
+
+            API.getBanners()
+
+            .then(response => {
+
+                this.banners =
+
+                    response.data;
+
+                /*
+                Start slider
+                only if banners exist.
+                */
+
+                if (
+
+                    this.banners.length > 1
+
+                ) {
+
+                    this.startBannerSlider();
+
+                }
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+            });
+
+        },
+
+        /*
+        --------------------------------------
+        Auto Slider
+        --------------------------------------
+        */
+
+        startBannerSlider() {
+
+            this.bannerInterval =
+
+                setInterval(() => {
+
+                    this.nextBanner();
+
+                }, 5000);
+
+        },
+
+        /*
+        --------------------------------------
+        Next Banner
+        --------------------------------------
+        */
+
+        nextBanner() {
+
+            this.currentBanner =
+
+                (
+
+                    this.currentBanner + 1
+
+                )
+
+                %
+
+                this.banners.length;
+
+        },
+
+        /*
+        --------------------------------------
+        Previous Banner
+        --------------------------------------
+        */
+
+        previousBanner() {
+
+            this.currentBanner--;
+
+            if (
+
+                this.currentBanner < 0
+
+            ) {
+
+                this.currentBanner =
+
+                    this.banners.length - 1;
+
+            }
+
+        },
+
+        /*
+        --------------------------------------
+        Go To Banner
+        --------------------------------------
+        */
+
+        goToBanner(
+
+            index
+
+        ) {
+
+            this.currentBanner =
+
+                index;
+
+        },
+
+        /*
+        --------------------------------------
+        Load Products
+        --------------------------------------
+        */
+
+        loadProducts(category = null) {
+
+            console.log(
+                "Loading products:",
+                category
+            );
+
+            API.getProducts(category)
+
+            .then(response => {
+
+                this.products =
+                    response.data;
+
+            })
+
+            .catch(error => {
+
+                console.error(error);
+
+            });
+
+        },
+
+
+
+        /*
+        --------------------------------------
         Refresh Cart Count
         --------------------------------------
         */
 
+        /*
+        --------------------------------------
+        Refresh Cart Count
+        --------------------------------------
+
+        Updates both:
+
+        1. Desktop cart badge
+        2. Mobile cart badge
+        */
+
         updateCartCount() {
 
+            // Total number of products
+            // currently inside cart.
+
             this.cartCount =
+
                 CartService.getTotalItems();
 
-            const badge =
+            /*
+            --------------------------------------
+            Desktop Badge
+            --------------------------------------
+            */
+
+            const desktopBadge =
+
                 document.getElementById(
+
                     'cart-count'
+
                 );
 
-            if (badge) {
+            if (
 
-                badge.innerText =
+                desktopBadge
+
+            ) {
+
+                desktopBadge.innerText =
+
                     this.cartCount;
+
             }
+
+            /*
+            --------------------------------------
+            Mobile Badge
+            --------------------------------------
+            */
+
+            const mobileBadge =
+
+                document.getElementById(
+
+                    'cart-count-mobile'
+
+                );
+
+            if (
+
+                mobileBadge
+
+            ) {
+
+                mobileBadge.innerText =
+
+                    this.cartCount;
+
+            }
+
+        },
+
+                /*
+        --------------------------------------
+        Add Product To Cart
+        --------------------------------------
+        */
+
+        addProductToCart(
+            product
+        ) {
+
+            addToCart(
+
+                product.id,
+
+                product.name,
+
+                product.slug,
+
+                product.price,
+
+                product.main_image
+
+            );
+
         }
     },
+
+       /*
+    --------------------------------------
+    Application Startup
+    --------------------------------------
+
+    When the application starts,
+    check whether the URL contains
+
+    /?category=id
+
+    If yes,
+
+    load only that category.
+
+    Otherwise,
+
+    load every product.
+    */
 
     mounted() {
 
         this.loadCategories();
 
+        this.loadBanners();
+
+        const params =
+
+            new URLSearchParams(
+
+                window.location.search
+
+            );
+
+        const category =
+
+            params.get(
+
+                'category'
+
+            );
+
+        if (category) {
+
+            this.selectedCategory =
+
+                Number(category);
+
+            this.loadProducts(
+
+                category
+
+            );
+
+        }
+
+        else {
+
+            this.selectedCategory =
+
+                null;
+
+            this.loadProducts();
+
+        }
+
         this.updateCartCount();
+
     }
 });
 
@@ -115,15 +433,36 @@ function addToCart(
     Refresh badge
     */
 
-    const badge =
+    const desktopBadge =
+
         document.getElementById(
+
             'cart-count'
+
         );
 
-    if (badge) {
+    const mobileBadge =
 
-        badge.innerText =
+        document.getElementById(
+
+            'cart-count-mobile'
+
+        );
+
+    if (desktopBadge) {
+
+        desktopBadge.innerText =
+
             CartService.getTotalItems();
+
+    }
+
+    if (mobileBadge) {
+
+        mobileBadge.innerText =
+
+            CartService.getTotalItems();
+
     }
 
     alert(
@@ -131,3 +470,161 @@ function addToCart(
         ' added to cart.'
     );
 }
+
+
+
+/*
+==================================================
+MOBILE DRAWER
+==================================================
+*/
+
+function toggleMobileMenu() {
+
+    const drawer =
+
+        document.getElementById(
+
+            'mobile-drawer'
+
+        );
+
+    const overlay =
+
+        document.getElementById(
+
+            'mobile-overlay'
+
+        );
+
+    drawer.classList.toggle(
+
+        'active'
+
+    );
+
+    overlay.classList.toggle(
+
+        'active'
+
+    );
+
+}
+
+
+/*
+--------------------------------------
+Close Drawer
+--------------------------------------
+*/
+
+function closeMobileMenu() {
+
+    document
+
+        .getElementById(
+
+            'mobile-drawer'
+
+        )
+
+        .classList.remove(
+
+            'active'
+
+        );
+
+    document
+
+        .getElementById(
+
+            'mobile-overlay'
+
+        )
+
+        .classList.remove(
+
+            'active'
+
+        );
+
+}
+
+
+/*
+--------------------------------------
+After Vue finishes rendering
+--------------------------------------
+*/
+
+window.onload = function () {
+
+    const overlay =
+
+        document.getElementById(
+
+            'mobile-overlay'
+
+        );
+
+    overlay.onclick =
+
+        closeMobileMenu;
+
+}
+
+
+
+/*
+Close menu when clicking outside
+*/
+
+document.addEventListener(
+
+    'DOMContentLoaded',
+
+    function () {
+
+        const overlay =
+
+            document.getElementById(
+
+                'mobile-overlay'
+
+            );
+
+        if (!overlay) return;
+
+        overlay.addEventListener(
+
+            'click',
+
+            function () {
+
+                document
+
+                    .getElementById(
+
+                        'mobile-drawer'
+
+                    )
+
+                    .classList.remove(
+
+                        'active'
+
+                    );
+
+                overlay.classList.remove(
+
+                    'active'
+
+                );
+
+            }
+
+        );
+
+    }
+
+);

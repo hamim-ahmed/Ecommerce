@@ -8,6 +8,41 @@ let deliveryOptions = [];
 
 function loadCheckoutPage() {
 
+
+    /*
+    Prevent Empty Checkout
+    */
+
+    const cart =
+
+        CartService.getCart();
+
+    if (
+
+        cart.length === 0
+
+    ) {
+
+        alert(
+
+            'Your cart is empty.'
+
+        );
+
+        window.location.href =
+
+            '/cart/';
+
+        return;
+
+    }
+
+    const subtotal =
+        CartService.getCartTotal();
+
+    ...
+
+
     const subtotal =
         CartService.getCartTotal();
 

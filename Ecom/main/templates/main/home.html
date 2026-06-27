@@ -8,53 +8,193 @@ Home
 
 <!-- Hero Banner -->
 
+<!-- ================================================= -->
+<!-- Hero Banner Slider -->
+<!-- ================================================= -->
+
 <section class="hero-section">
 
     <div class="ui container">
 
-        {% for banner in banners %}
+        <div
 
-            <div class="hero-banner">
+            class="hero-slider"
 
-                <img src="{{ banner.image.url }}"
-                     alt="{{ banner.title }}">
+            v-if="banners.length"
+
+        >
+
+            <!-- Current Banner -->
+
+            <div
+
+                class="hero-banner"
+
+            >
+
+                <img
+
+                    :src="
+
+                        banners[currentBanner].image
+
+                    "
+
+                    :alt="
+
+                        banners[currentBanner].title
+
+                    "
+
+                >
 
                 <div class="hero-content">
 
                     <h1>
-                        {{ banner.title }}
+
+                        [[
+
+                            banners[currentBanner].title
+
+                        ]]
+
                     </h1>
 
                     <p>
-                        {{ banner.subtitle }}
+
+                        [[
+
+                            banners[currentBanner].subtitle
+
+                        ]]
+
                     </p>
 
-                    {% if banner.button_text %}
+<!--                    <a-->
 
-                        <a href="{{ banner.button_url }}"
-                           class="ui huge primary button">
+<!--                        v-if="-->
 
-                            {{ banner.button_text }}
+<!--                            banners[currentBanner].button_text-->
 
-                        </a>
+<!--                        "-->
 
-                    {% endif %}
+<!--                        :href="-->
+
+<!--                            banners[currentBanner].button_url-->
+
+<!--                        "-->
+
+<!--                        class="ui huge primary button"-->
+
+<!--                        :target="-->
+
+<!--                            banners[currentBanner].open_in_new_tab-->
+
+<!--                            ?-->
+
+<!--                            '_blank'-->
+
+<!--                            :-->
+
+<!--                            '_self'-->
+
+<!--                        "-->
+
+<!--                    >-->
+
+<!--                        [[-->
+
+<!--                            banners[currentBanner].button_text-->
+
+<!--                        ]]-->
+
+<!--                    </a>-->
 
                 </div>
 
             </div>
 
-        {% empty %}
+            <!-- Previous -->
 
-            <div class="ui placeholder segment">
+            <button
 
-                <h3>
-                    No Banner Added Yet
-                </h3>
+                class="banner-prev"
+
+                @click="previousBanner"
+
+            >
+
+                ❮
+
+            </button>
+
+            <!-- Next -->
+
+            <button
+
+                class="banner-next"
+
+                @click="nextBanner"
+
+            >
+
+                ❯
+
+            </button>
+
+            <!-- Dots -->
+
+            <div
+
+                class="banner-dots"
+
+            >
+
+                <span
+
+                    v-for="
+
+                        (
+
+                            banner,
+
+                            index
+
+                        )
+
+                        in banners
+
+                    "
+
+                    :key="banner.id"
+
+                    class="banner-dot"
+
+                    :class="{
+
+                        active:
+
+                        currentBanner===index
+
+                    }"
+
+                    @click="
+
+                        goToBanner(
+
+                            index
+
+                        )
+
+                    "
+
+                >
+
+                </span>
 
             </div>
 
-        {% endfor %}
+        </div>
 
     </div>
 
@@ -62,54 +202,127 @@ Home
 
 <!-- Featured Products -->
 
+<!-- ================================================= -->
+<!-- Products Section (Vue) -->
+<!-- ================================================= -->
+
 <section class="featured-section">
 
     <div class="ui container">
 
         <h2 class="ui header">
-            Featured Products
+
+            Products
+
         </h2>
 
         <div class="ui four stackable cards">
 
-            {% for product in featured_products %}
+            <div
 
-                <div class="card">
+                class="card"
 
-                    <div class="image">
-                        <a href="{% url 'product_detail' product.slug %}">
-                            <img src="{{ product.main_image.url }}" alt="{{ product.name }}">
-                        </a>
+                v-for="product in products"
+
+                :key="product.id"
+
+            >
+
+                <!-- Product Image -->
+
+                <div class="image">
+
+                    <a
+
+                        :href="
+
+                            '/product/' +
+
+                            product.slug +
+
+                            '/'
+
+                        "
+
+                    >
+
+                        <img
+
+                            :src="product.main_image"
+
+                            :alt="product.name"
+
+                        >
+
+                    </a>
+
+                </div>
+
+                <!-- Product Info -->
+
+                <div class="content">
+
+                    <div class="header">
+
+                        [[ product.name ]]
 
                     </div>
 
-                    <div class="content">
+                    <div class="meta">
 
-                        <div class="header">
+                        [[ product.category_name ]]
 
-                            {{ product.name }}
+                    </div>
 
-                        </div>
+                    <div class="description">
 
-                        <div class="description">
-
-                            ৳ {{ product.price }}
-
-                        </div>
+                        ৳ [[ product.price ]]
 
                     </div>
 
                 </div>
 
-            {% empty %}
+                <!-- Product Button -->
 
-                <div class="ui message">
+                <div class="extra content">
 
-                    No Featured Product Yet
+                    <button
+
+                        class="ui fluid primary button"
+
+                        @click="
+
+                            addProductToCart(
+
+                                product
+
+                            )
+
+                        "
+
+                    >
+
+                        Add To Cart
+
+                    </button>
 
                 </div>
 
-            {% endfor %}
+            </div>
+
+        </div>
+
+        <!-- Empty Message -->
+
+        <div
+
+            v-if="products.length===0"
+
+            class="ui warning message"
+
+        >
+
+            No products found.
 
         </div>
 

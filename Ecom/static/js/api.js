@@ -116,12 +116,54 @@ const API = {
     -----------------------------------
     */
 
-    getProducts() {
 
-        return axios.get(
-            '/api/products/'
-        );
-    },
+
+/*
+==================================================
+GET HOMEPAGE BANNERS
+==================================================
+*/
+
+getBanners() {
+
+    return axios.get(
+
+        '/api/banners/'
+
+    );
+
+},
+
+
+
+   /*
+==================================================
+GET PRODUCTS
+==================================================
+
+Supports:
+
+/api/products/
+
+/api/products/?category=3
+
+*/
+
+getProducts(category = null) {
+
+    let url =
+        '/api/products/';
+
+    if (category) {
+
+        url +=
+            '?category=' + category;
+
+    }
+
+    return axios.get(url);
+
+},
 
     /*
     -----------------------------------

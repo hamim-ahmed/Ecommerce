@@ -103,20 +103,41 @@
 
                 <div class="card">
 
-                    <div class="image">
+                    <!-- Product Image -->
 
-                        <img src="{{ item.main_image.url }}"
-                             alt="{{ item.name }}">
+                    <a
 
-                    </div>
+                        href="{% url 'product_detail' item.slug %}"
+
+                        class="image"
+
+                    >
+
+                        <img
+
+                            src="{{ item.main_image.url }}"
+
+                            alt="{{ item.name }}"
+
+                        >
+
+                    </a>
+
+                    <!-- Product Info -->
 
                     <div class="content">
 
-                        <div class="header">
+                        <a
+
+                            href="{% url 'product_detail' item.slug %}"
+
+                            class="header"
+
+                        >
 
                             {{ item.name }}
 
-                        </div>
+                        </a>
 
                         <div class="description">
 

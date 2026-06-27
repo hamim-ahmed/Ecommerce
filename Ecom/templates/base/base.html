@@ -47,11 +47,204 @@
 
 <div id="app">
 
+
+
+    <!-- ========================================= -->
+    <!-- MOBILE HEADER -->
+    <!-- ========================================= -->
+
+    <div class="mobile-header">
+
+        <button
+
+            class="mobile-menu-btn"
+
+            onclick="toggleMobileMenu()"
+
+        >
+
+            ☰
+
+        </button>
+
+        <a
+
+            href="/"
+
+            class="mobile-logo"
+
+        >
+
+            {% if site_settings.logo %}
+
+            <img
+
+                src="{{ site_settings.logo.url }}"
+
+                class="site-logo"
+
+            >
+
+            {% endif %}
+
+            <span>
+
+                {{ site_settings.site_name }}
+
+            </span>
+
+        </a>
+
+        <a
+
+            href="{% url 'cart' %}"
+
+            class="ui icon button"
+
+        >
+
+            <i class="shopping cart icon"></i>
+
+            <span
+
+                id="cart-count-mobile"
+
+                class="cart-badge"
+
+            >
+
+                0
+
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- ===================================== -->
+<!-- Mobile Menu Overlay -->
+<!-- ===================================== -->
+
+    <div
+
+        id="mobile-overlay"
+
+        class="mobile-overlay"
+
+    ></div>
+
+
+    <!-- ===================================== -->
+    <!-- Mobile Drawer -->
+    <!-- ===================================== -->
+
+    <div
+
+        id="mobile-drawer"
+
+        class="mobile-drawer"
+
+    >
+
+        <div class="drawer-header">
+
+            <strong>
+
+                Menu
+
+            </strong>
+
+        </div>
+
+        <ul class="mobile-menu">
+
+            <li>
+
+                <a href="/">
+
+                    Home
+
+                </a>
+
+            </li>
+
+            <li
+
+                v-for="category in categories"
+
+                :key="'mobile-'+category.id"
+
+            >
+
+                <a
+
+                    :href="'/?category=' + category.id"
+
+                >
+
+                    [[ category.name ]]
+
+                </a>
+
+            </li>
+
+        </ul>
+
+        <hr>
+
+        {% if request.user.is_staff %}
+
+        <a
+
+            href="/admin-panel/dashboard/"
+
+            class="ui fluid button"
+
+        >
+
+            Dashboard
+
+        </a>
+
+        <br>
+
+        <a
+
+            href="/admin-panel/orders/"
+
+            class="ui fluid button"
+
+        >
+
+            Orders
+
+        </a>
+
+        <br>
+
+        <a
+
+            href="/admin/"
+
+            class="ui primary fluid button"
+
+        >
+
+            Logout
+
+        </a>
+
+        {% endif %}
+
+    </div>
+
+
     <!-- ========================= -->
     <!-- Top Header -->
     <!-- ========================= -->
 
-    <header>
+   <header class="desktop-header">
 
         <div class="main-header">
 
@@ -61,8 +254,15 @@
 
                     <!-- Mobile Menu Button -->
 
-                    <button id="mobile-menu-btn"
-                            class="mobile-menu-btn">
+                    <button
+
+                        id="mobile-menu-btn"
+
+                        class="mobile-menu-btn"
+
+                        onclick="toggleMobileMenu()"
+
+                    >
 
                         ☰
 
@@ -106,10 +306,90 @@
 
                     </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    {% if request.user.is_staff %}
+
+                    <div class="ui simple dropdown item">
+
+                        Admin
+
+                        <i class="dropdown icon"></i>
+
+                        <div class="menu">
+
+                            <a
+                                    class="item"
+                                    href="/admin-panel/dashboard/"
+                            >
+                                Dashboard
+                            </a>
+
+                            <a
+                                    class="item"
+                                    href="/admin-panel/orders/"
+                            >
+                                All Orders
+                            </a>
+
+                            <a
+                                    class="item"
+                                    href="/admin-panel/orders/?status=pending"
+                            >
+                                Pending Orders
+                            </a>
+
+                            <a
+                                    class="item"
+                                    href="/admin-panel/orders/?status=confirmed"
+                            >
+                                Confirmed Orders
+                            </a>
+
+                            <a
+                                    class="item"
+                                    href="/admin-panel/orders/?status=processing"
+                            >
+                                Processing Orders
+                            </a>
+
+                            <a
+                                    class="item"
+                                    href="/admin-panel/orders/?status=delivered"
+                            >
+                                Delivered Orders
+                            </a>
+
+                            <a
+                                    class="item"
+                                    href="/admin-panel/orders/?status=cancelled"
+                            >
+                                Cancelled Orders
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
                     <!-- Right Actions -->
 
                     <div class="header-actions">
 
+                        {% if request.user.is_staff %}
                         <div class="notification-wrapper">
 
                             <button
@@ -138,6 +418,7 @@
                             </div>
 
                         </div>
+                        {% endif %}
 
 
                         <a href="{% url 'cart' %}"
@@ -152,12 +433,17 @@
 
                         </a>
 
+                        {% if request.user.is_staff %}
+
                         <a href="/admin/"
                            class="ui primary button">
 
-                            Admin Login
+                            Log Out
 
                         </a>
+                        {% else %}
+
+                        {% endif %}
 
                     </div>
 
@@ -178,18 +464,52 @@
                 <ul class="desktop-menu">
 
                     <li>
-                        <a href="/">Home</a>
-                    </li>
 
-                    {% for category in categories %}
+                        <a
 
-                    <li>
-                        <a href="#">
-                            {{ category.name }}
+                            href="/"
+
+                        >
+
+                            Home
+
                         </a>
+
                     </li>
 
-                    {% endfor %}
+                    <li
+
+                        v-for="category in categories"
+
+                        :key="category.id"
+
+                    >
+
+                        <a
+
+                            :href="
+
+                                '/?category=' +
+
+                                category.id
+
+                            "
+
+                            :class="{
+
+                                active:
+
+                                selectedCategory === category.id
+
+                            }"
+
+                        >
+
+                            [[ category.name ]]
+
+                        </a>
+
+                    </li>
 
                 </ul>
 

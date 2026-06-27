@@ -207,3 +207,292 @@ NOTIFICATION ITEMS
 
     cursor: pointer;
 }
+
+
+
+.desktop-menu a.active{
+
+    color:#2185d0;
+
+    font-weight:bold;
+
+    border-bottom:3px solid #2185d0;
+
+}
+
+
+
+/*
+==================================================
+MOBILE DRAWER
+==================================================
+*/
+
+/*
+Hidden on desktop.
+*/
+
+
+
+/*
+==================================================
+DESKTOP / MOBILE
+==================================================
+*/
+
+.mobile-header{
+
+    display:none;
+
+}
+
+
+/*
+==================================================
+Hide Mobile Components On Desktop
+==================================================
+*/
+
+.mobile-header,
+.mobile-drawer,
+.mobile-overlay{
+
+    display:none;
+
+}
+
+@media(max-width:768px){
+
+.mobile-header{
+
+    display:flex;
+
+}
+
+.mobile-drawer{
+
+    display:block;
+
+}
+
+.mobile-overlay{
+
+    display:block;
+
+}
+
+.desktop-header{
+
+display:none;
+
+}
+
+.mobile-header{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:12px 16px;
+
+background:#fff;
+
+border-bottom:1px solid #ddd;
+
+position:sticky;
+
+top:0;
+
+z-index:999;
+
+}
+
+.mobile-logo{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+text-decoration:none;
+
+color:#222;
+
+font-size:20px;
+
+font-weight:bold;
+
+}
+
+.mobile-menu-btn{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:28px;
+
+background:none;
+
+border:none;
+
+cursor:pointer;
+
+}
+
+}
+
+
+
+/*
+==================================================
+MOBILE DRAWER
+==================================================
+*/
+
+@media (max-width:768px){
+
+    /*
+    Dark background
+    */
+
+    .mobile-overlay{
+
+        position:fixed;
+
+        inset:0;
+
+        background:rgba(0,0,0,.45);
+
+        opacity:0;
+
+        visibility:hidden;
+
+        transition:.3s;
+
+        z-index:9998;
+
+    }
+
+    .mobile-overlay.active{
+
+        opacity:1;
+
+        visibility:visible;
+
+    }
+
+    /*
+    Drawer
+    */
+
+    /*
+--------------------------------------
+Mobile Drawer
+--------------------------------------
+*/
+
+.mobile-drawer{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:260px;
+
+    height:100vh;
+
+    background:#fff;
+
+    overflow-y:auto;
+
+    box-shadow:3px 0 15px rgba(0,0,0,.20);
+
+    z-index:99991;
+
+    padding:20px;
+
+    transition:transform .3s ease;
+
+    transform:translateX(-100%);
+
+}
+
+/*
+--------------------------------------
+Open Drawer
+--------------------------------------
+*/
+
+.mobile-drawer.active{
+
+    transform:translateX(0);
+
+}
+
+
+
+    /*
+    Drawer title
+    */
+
+    .drawer-header{
+
+        font-size:22px;
+
+        font-weight:bold;
+
+        margin-bottom:20px;
+
+    }
+
+    /*
+    Menu
+    */
+
+    .mobile-menu{
+
+        list-style:none;
+
+        margin:0;
+
+        padding:0;
+
+    }
+
+    .mobile-menu li{
+
+        margin-bottom:8px;
+
+    }
+
+    .mobile-menu a{
+
+        display:block;
+
+        padding:12px;
+
+        border-radius:6px;
+
+        color:#333;
+
+        text-decoration:none;
+
+        font-weight:600;
+
+    }
+
+    .mobile-menu a:hover{
+
+        background:#f5f5f5;
+
+    }
+
+}

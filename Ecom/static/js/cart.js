@@ -343,3 +343,40 @@ function removeCartItem(
             CartService.getTotalItems();
     }
 }
+
+
+/*
+=================================================
+PROCEED TO CHECKOUT
+=================================================
+
+Don't allow checkout
+if the cart is empty.
+*/
+
+function proceedToCheckout() {
+
+    const cart =
+
+        CartService.getCart();
+
+    if (
+
+        cart.length === 0
+
+    ) {
+
+        alert(
+
+            'Your cart is empty.\n\nPlease add at least one product before checkout.'
+
+        );
+
+        return;
+    }
+
+    window.location.href =
+
+        '/checkout/';
+
+}

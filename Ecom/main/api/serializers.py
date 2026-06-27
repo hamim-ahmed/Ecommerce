@@ -55,6 +55,7 @@ from ..models import (
     OrderItem,
     Notification,
     DeliveryCharge,
+    Banner,
 )
 
 
@@ -124,6 +125,9 @@ class ProductSerializer(serializers.ModelSerializer):
         source='category.name',
         read_only=True
     )
+    main_image = serializers.ImageField(
+        read_only=True
+    )
 
     class Meta:
 
@@ -147,6 +151,64 @@ class ProductSerializer(serializers.ModelSerializer):
 
             'category_name',
         ]
+
+
+
+
+class BannerSerializer(
+    serializers.ModelSerializer
+):
+    """
+    Banner serializer for homepage slider.
+
+    Returns only active banners,
+    ordered by display_order.
+    """
+
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+
+        model = Banner
+
+        fields = [
+
+            'id',
+
+            'title',
+
+            'subtitle',
+
+            'image',
+
+            'button_text',
+
+            'button_url',
+
+            'open_in_new_tab',
+
+            'display_order',
+        ]
+
+    def get_image(
+        self,
+        obj
+    ):
+
+        request = self.context.get(
+            'request'
+        )
+
+        if obj.image:
+
+            return request.build_absolute_uri(
+
+                obj.image.url
+
+            )
+
+        return None
+
 
 
 # ==========================================================
