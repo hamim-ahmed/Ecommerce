@@ -133,39 +133,49 @@ class BannerListAPIView(
 # PRODUCT LIST API
 # ==========================================================
 
+from django.db.models import Q
+from rest_framework import generics
+
+
 class ProductListAPIView(
     generics.ListAPIView
 ):
     """
-    Returns products.
+    Product List API
 
     Supports:
 
-        /api/products/
+    /api/products/
 
-        /api/products/?category=3
+    /api/products/?category=3
+
+    /api/products/?search=helmet
+
+    /api/products/?category=3&search=helmet
     """
 
     serializer_class = ProductSerializer
 
     def get_queryset(self):
 
-        queryset = (
+        queryset = Product.objects.filter(
 
-            Product.objects
+            is_active=True
 
-            .filter(
-                is_active=True
-            )
+        ).select_related(
 
-            .select_related(
-                'category'
-            )
+            'category'
 
         )
 
+        # -----------------------------------------
+        # Category Filter
+        # -----------------------------------------
+
         category = self.request.GET.get(
+
             'category'
+
         )
 
         if category:
@@ -173,6 +183,24 @@ class ProductListAPIView(
             queryset = queryset.filter(
 
                 category_id=category
+
+            )
+
+        # -----------------------------------------
+        # Search Filter
+        # -----------------------------------------
+
+        search = self.request.GET.get(
+
+            'search'
+
+        )
+
+        if search:
+
+            queryset = queryset.filter(
+
+                Q(name__icontains=search)
 
             )
 

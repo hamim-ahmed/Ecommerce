@@ -200,10 +200,8 @@ Home
 
 </section>
 
-<!-- Featured Products -->
-
 <!-- ================================================= -->
-<!-- Products Section (Vue) -->
+<!-- Products -->
 <!-- ================================================= -->
 
 <section class="featured-section">
@@ -216,11 +214,11 @@ Home
 
         </h2>
 
-        <div class="ui four stackable cards">
+        <div class="products-grid">
 
             <div
 
-                class="card"
+                class="product-card"
 
                 v-for="product in products"
 
@@ -230,51 +228,41 @@ Home
 
                 <!-- Product Image -->
 
-                <div class="image">
+                <a
 
-                    <a
+                    class="product-image"
 
-                        :href="
+                    :href="'/product/' + product.slug + '/'"
 
-                            '/product/' +
+                >
 
-                            product.slug +
+                    <img
 
-                            '/'
+                        :src="product.main_image"
 
-                        "
+                        :alt="product.name"
 
                     >
 
-                        <img
+                </a>
 
-                            :src="product.main_image"
+                <!-- Product Information -->
 
-                            :alt="product.name"
+                <div class="product-body">
 
-                        >
-
-                    </a>
-
-                </div>
-
-                <!-- Product Info -->
-
-                <div class="content">
-
-                    <div class="header">
+                    <div class="product-title">
 
                         [[ product.name ]]
 
                     </div>
 
-                    <div class="meta">
+                    <div class="product-category">
 
                         [[ product.category_name ]]
 
                     </div>
 
-                    <div class="description">
+                    <div class="product-price">
 
                         ৳ [[ product.price ]]
 
@@ -282,25 +270,19 @@ Home
 
                 </div>
 
-                <!-- Product Button -->
+                <!-- Footer -->
 
-                <div class="extra content">
+                <div class="product-footer">
 
                     <button
 
                         class="ui fluid primary button"
 
-                        @click="
-
-                            addProductToCart(
-
-                                product
-
-                            )
-
-                        "
+                        @click="addProductToCart(product)"
 
                     >
+
+                        <i class="shopping cart icon"></i>
 
                         Add To Cart
 
@@ -311,8 +293,6 @@ Home
             </div>
 
         </div>
-
-        <!-- Empty Message -->
 
         <div
 

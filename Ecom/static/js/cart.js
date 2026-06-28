@@ -73,7 +73,24 @@ const CartService = {
     -----------------------------------------
     */
 
-    addProduct(product) {
+    /*
+    -----------------------------------------
+    Add Product
+    -----------------------------------------
+
+    Supports custom quantity.
+
+    Homepage:
+    quantity defaults to 1.
+
+    Product Details:
+    quantity comes from quantity input.
+    */
+
+    addProduct(
+        product,
+        quantity = 1
+    ) {
 
         let cart =
             this.getCart();
@@ -83,21 +100,12 @@ const CartService = {
                 item.id === product.id
             );
 
-        /*
-        Product already exists
-        in cart.
-
-        Increase quantity.
-        */
-
         if (existingItem) {
 
-            existingItem.quantity += 1;
-        }
+            existingItem.quantity +=
+                Number(quantity);
 
-        /*
-        New product.
-        */
+        }
 
         else {
 
@@ -113,13 +121,16 @@ const CartService = {
 
                 image: product.main_image,
 
-                quantity: 1
+                quantity: Number(quantity)
+
             });
+
         }
 
         this.saveCart(cart);
 
         return cart;
+
     },
 
     /*

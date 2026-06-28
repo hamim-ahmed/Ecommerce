@@ -10,22 +10,34 @@
 
     <div class="ui stackable grid">
 
+        <!-- ================================================= -->
         <!-- Product Image -->
+        <!-- ================================================= -->
 
         <div class="eight wide column">
 
-            <img src="{{ product.main_image.url }}"
-                 class="ui fluid rounded image"
-                 alt="{{ product.name }}">
+            <img
+
+                src="{{ product.main_image.url }}"
+
+                class="ui fluid rounded image"
+
+                alt="{{ product.name }}"
+
+            >
 
         </div>
 
-        <!-- Product Info -->
+        <!-- ================================================= -->
+        <!-- Product Information -->
+        <!-- ================================================= -->
 
         <div class="eight wide column">
 
             <h1>
+
                 {{ product.name }}
+
             </h1>
 
             <h2 class="product-price">
@@ -52,32 +64,45 @@
 
             </p>
 
+            <!-- Quantity -->
+
             <div class="ui form">
 
                 <div class="field">
 
                     <label>
+
                         Quantity
+
                     </label>
 
-                    <input type="number"
-                           min="1"
-                           value="1">
+                    <input
+
+                        id="quantity"
+
+                        type="number"
+
+                        min="1"
+
+                        value="1"
+
+                    >
 
                 </div>
 
             </div>
 
+            <!-- Add To Cart -->
+
             <button
+
                 class="ui huge primary button"
 
-                onclick="addToCart(
-                    {{ product.id }},
-                    '{{ product.name|escapejs }}',
-                    '{{ product.slug }}',
-                    '{{ product.price }}',
-                    '{{ product.main_image.url }}'
-                )">
+                onclick="addCurrentProductToCart()"
+
+            >
+
+                <i class="shopping cart icon"></i>
 
                 Add To Cart
 
@@ -87,7 +112,11 @@
 
     </div>
 
+    <!-- ================================================= -->
     <!-- Related Products -->
+    <!-- ================================================= -->
+
+    {% if related_products %}
 
     <div class="related-products">
 
@@ -97,19 +126,19 @@
 
         </h2>
 
-        <div class="ui four stackable cards">
+        <div class="products-grid">
 
             {% for item in related_products %}
 
-                <div class="card">
+                <div class="product-card">
 
-                    <!-- Product Image -->
+                    <!-- Image -->
 
                     <a
 
                         href="{% url 'product_detail' item.slug %}"
 
-                        class="image"
+                        class="product-image"
 
                     >
 
@@ -123,27 +152,45 @@
 
                     </a>
 
-                    <!-- Product Info -->
+                    <!-- Body -->
 
-                    <div class="content">
+                    <div class="product-body">
+
+                        <div class="product-title">
+
+                            {{ item.name }}
+
+                        </div>
+
+                        <div class="product-category">
+
+                            {{ item.category.name }}
+
+                        </div>
+
+                        <div class="product-price">
+
+                            ৳ {{ item.price }}
+
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+
+                    <div class="product-footer">
 
                         <a
 
                             href="{% url 'product_detail' item.slug %}"
 
-                            class="header"
+                            class="ui fluid primary button"
 
                         >
 
-                            {{ item.name }}
+                            View Details
 
                         </a>
-
-                        <div class="description">
-
-                            ৳ {{ item.price }}
-
-                        </div>
 
                     </div>
 
@@ -155,6 +202,46 @@
 
     </div>
 
+    {% endif %}
+
 </div>
+
+<!-- ================================================= -->
+<!-- Product Details JavaScript -->
+<!-- ================================================= -->
+
+<script>
+
+function addCurrentProductToCart(){
+
+    const quantity = Number(
+
+        document.getElementById(
+
+            'quantity'
+
+        ).value
+
+    );
+
+    addToCart(
+
+        {{ product.id }},
+
+        '{{ product.name|escapejs }}',
+
+        '{{ product.slug }}',
+
+        '{{ product.price }}',
+
+        '{{ product.main_image.url }}',
+
+        quantity
+
+    );
+
+}
+
+</script>
 
 {% endblock %}

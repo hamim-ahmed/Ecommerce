@@ -31,6 +31,8 @@ const app = Vue.createApp({
             selectedCategory: null,
 
             cartCount: 0,
+
+            searchKeyword: '',
         }
     },
 
@@ -192,27 +194,101 @@ const app = Vue.createApp({
         --------------------------------------
         */
 
-        loadProducts(category = null) {
+        loadProducts(
 
-            console.log(
-                "Loading products:",
-                category
-            );
+            category = null,
 
-            API.getProducts(category)
+            search = null
 
-            .then(response => {
+        ){
+
+            API.getProducts(
+
+                category,
+
+                search
+
+            )
+
+            .then(response=>{
 
                 this.products =
+
                     response.data;
 
             })
 
-            .catch(error => {
+            .catch(error=>{
 
                 console.error(error);
 
             });
+
+        },
+
+
+        searchProducts() {
+
+            const keyword =
+
+                this.searchKeyword.trim();
+
+            /*
+            If user searches from
+            another page, go to homepage
+            with search parameter.
+            */
+
+            if (
+
+                !window.location.pathname.startsWith('/')
+
+                ||
+
+                window.location.pathname !== '/'
+
+            ) {
+
+                window.location.href =
+
+                    '/?search=' +
+
+                    encodeURIComponent(
+
+                        keyword
+
+                    );
+
+                return;
+
+            }
+
+            this.loadProducts(
+
+                this.selectedCategory,
+
+                keyword
+
+            );
+
+        },
+
+
+        clearSearch(){
+
+            if(
+
+                this.searchKeyword.trim()===''
+
+            ){
+
+                this.loadProducts(
+
+                    this.selectedCategory
+
+                );
+
+            }
 
         },
 
@@ -306,24 +382,24 @@ const app = Vue.createApp({
 
         addProductToCart(
             product
-        ) {
+            ) {
 
-            addToCart(
+                addToCart(
 
-                product.id,
+                    product.id,
 
-                product.name,
+                    product.name,
 
-                product.slug,
+                    product.slug,
 
-                product.price,
+                    product.price,
 
-                product.main_image
+                    product.main_image
 
-            );
+                );
 
-        }
-    },
+            }
+        },
 
        /*
     --------------------------------------
@@ -413,21 +489,29 @@ function addToCart(
     name,
     slug,
     price,
-    image
+    image,
+    quantity = 1
 ) {
 
-    CartService.addProduct({
+    CartService.addProduct(
 
-        id: id,
+        {
 
-        name: name,
+            id:id,
 
-        slug: slug,
+            name:name,
 
-        price: price,
+            slug:slug,
 
-        main_image: image
-    });
+            price:price,
+
+            main_image:image
+
+        },
+
+        quantity
+
+    );
 
     /*
     Refresh badge

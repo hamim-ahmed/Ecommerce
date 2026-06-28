@@ -291,14 +291,33 @@
 
                     <div class="search-section">
 
-                        <form>
+                        <form @submit.prevent="searchProducts">
 
-                            <div class="ui fluid icon input">
+                            <div class="ui fluid action input">
 
-                                <input type="text"
-                                       placeholder="Search products...">
+                                <input
 
-                                <i class="search icon"></i>
+                                    type="text"
+
+                                    v-model="searchKeyword"
+
+                                    @keyup.enter="searchProducts"
+
+                                    placeholder="Search products..."
+
+                                >
+
+                                <button
+
+                                    class="ui primary icon button"
+
+                                    type="submit"
+
+                                >
+
+                                    <i class="search icon"></i>
+
+                                </button>
 
                             </div>
 

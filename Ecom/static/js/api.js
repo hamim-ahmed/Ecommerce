@@ -149,15 +149,46 @@ Supports:
 
 */
 
-getProducts(category = null) {
+getProducts(
+    category = null,
+    search = null
+){
 
     let url =
+
         '/api/products/';
 
-    if (category) {
+    const params = [];
+
+    if(category){
+
+        params.push(
+
+            'category=' + category
+
+        );
+
+    }
+
+    if(search){
+
+        params.push(
+
+            'search=' +
+
+            encodeURIComponent(search)
+
+        );
+
+    }
+
+    if(params.length){
 
         url +=
-            '?category=' + category;
+
+            '?' +
+
+            params.join('&');
 
     }
 
