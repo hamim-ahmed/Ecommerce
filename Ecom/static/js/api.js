@@ -202,11 +202,39 @@ getProducts(
     -----------------------------------
     */
 
-    getProduct(slug) {
+    // getProduct(slug) {
+    //
+    //     return axios.get(
+    //         `/api/products/${slug}/`
+    //     );
+    // },
 
-        return axios.get(
-            `/api/products/${slug}/`
-        );
+
+    getProducts(
+    category = null,
+    search = null
+    ){
+        let url = '/api/products/';
+        const params = [];
+
+        if(category){
+            params.push(
+                'category=' + category
+            );
+        }
+
+        if(search){
+            params.push(
+                'search=' +
+                encodeURIComponent(search)
+            );
+        }
+
+        if(params.length){
+            url += '?' + params.join('&');
+        }
+
+        return axios.get(url);
     },
 
     getDeliveryCharges() {

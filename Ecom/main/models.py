@@ -65,6 +65,91 @@ class Category(models.Model):
         verbose_name_plural = 'Categories'
 
 
+class SubCategory(models.Model):
+    """
+    Product Sub Categories
+
+    Examples:
+
+        Category:
+            Helmets
+
+        Sub Categories:
+            MT
+            SMK
+            LS2
+            Shark
+
+    """
+
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        related_name='subcategories'
+    )
+
+    name = models.CharField(
+        max_length=100
+    )
+
+    slug = models.SlugField(
+        blank=True
+    )
+
+    image = models.ImageField(
+        upload_to='subcategories/',
+        blank=True,
+        null=True
+    )
+
+    display_order = models.PositiveIntegerField(
+        default=0
+    )
+
+    is_active = models.BooleanField(
+        default=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    class Meta:
+
+        ordering = [
+
+            'display_order',
+
+            'name'
+
+        ]
+
+        unique_together = [
+
+            'category',
+
+            'name'
+
+        ]
+
+    def save(self, *args, **kwargs):
+
+        if not self.slug:
+
+            self.slug = slugify(self.name)
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+
+        return f'{self.category.name} / {self.name}'
+
+
+
 class Product(models.Model):
     """
     Main product table.
@@ -74,6 +159,14 @@ class Product(models.Model):
         Category,
         on_delete=models.CASCADE,
         related_name='products'
+    )
+
+    subcategory = models.ForeignKey(
+        SubCategory,
+        on_delete=models.SET_NULL,
+        related_name='products',
+        null=True,
+        blank=True
     )
 
     name = models.CharField(

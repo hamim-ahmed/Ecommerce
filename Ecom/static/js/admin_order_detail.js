@@ -421,7 +421,7 @@ function renderOrderDetail(
 
                     <p>
 
-                        <strong>Subtotal:</strong>
+                        <strong>total:</strong>
 
                         ৳ ${order.subtotal}
 
@@ -437,9 +437,9 @@ function renderOrderDetail(
 
                     <p>
 
-                        <strong>Total:</strong>
+                        <strong>SubTotal:</strong>
 
-                        ৳ ${order.total_amount}
+                       <strong style="color: red;"> ৳ ${order.total_amount} </strong>
 
                     </p>
 

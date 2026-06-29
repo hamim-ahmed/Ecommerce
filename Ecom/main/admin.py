@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import (
     Category,
+    SubCategory,
     Product,
     ProductImage,
     Order,
@@ -60,6 +61,45 @@ class CategoryAdmin(admin.ModelAdmin):
     )
 
 
+
+# ==========================================================
+# Sub Category Admin
+# ==========================================================
+
+@admin.register(SubCategory)
+class SubCategoryAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'id',
+        'name',
+        'category',
+        'display_order',
+        'is_active',
+        'created_at',
+    )
+
+    list_filter = (
+        'category',
+        'is_active',
+    )
+
+    search_fields = (
+        'name',
+        'category__name',
+    )
+
+    prepopulated_fields = {
+        'slug': ('name',)
+    }
+
+    ordering = (
+        'category',
+        'display_order',
+        'name',
+    )
+
+
+
 # ==========================================================
 # Product Admin
 # ==========================================================
@@ -71,6 +111,7 @@ class ProductAdmin(admin.ModelAdmin):
         'id',
         'name',
         'category',
+        'subcategory',
         'slug',
         'price',
         'main_image',
@@ -83,6 +124,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     list_filter = (
         'category',
+        'subcategory',
         'is_featured',
         'is_active',
     )
@@ -91,6 +133,8 @@ class ProductAdmin(admin.ModelAdmin):
         'name',
         'short_description',
         'description',
+        'category__name',
+        'subcategory__name',
     )
 
     prepopulated_fields = {
@@ -104,6 +148,99 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [
         ProductImageInline
     ]
+
+    fieldsets = (
+
+        (
+            'Category',
+
+            {
+
+                'fields': (
+
+                    'category',
+
+                    'subcategory',
+
+                )
+
+            }
+
+        ),
+
+        (
+            'Basic Information',
+
+            {
+
+                'fields': (
+
+                    'name',
+
+                    'slug',
+
+                    'sku',
+
+                    'short_description',
+
+                    'description',
+
+                )
+
+            }
+
+        ),
+
+        (
+            'Pricing',
+
+            {
+
+                'fields': (
+
+                    'price',
+
+                    'stock',
+
+                )
+
+            }
+
+        ),
+
+        (
+            'Images',
+
+            {
+
+                'fields': (
+
+                    'main_image',
+
+                )
+
+            }
+
+        ),
+
+        (
+            'Display',
+
+            {
+
+                'fields': (
+
+                    'is_featured',
+
+                    'is_active',
+
+                )
+
+            }
+
+        ),
+
+    )
 
 
 # ==========================================================

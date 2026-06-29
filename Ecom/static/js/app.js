@@ -426,6 +426,22 @@ const app = Vue.createApp({
 
         this.loadBanners();
 
+        /*
+        --------------------------------------
+        Read URL Parameters
+
+        Examples:
+
+        /
+
+        /?category=2
+
+        /?search=helmet
+
+        /?category=2&search=helmet
+        --------------------------------------
+        */
+
         const params =
 
             new URLSearchParams(
@@ -433,6 +449,8 @@ const app = Vue.createApp({
                 window.location.search
 
             );
+
+        // Category parameter
 
         const category =
 
@@ -442,29 +460,41 @@ const app = Vue.createApp({
 
             );
 
-        if (category) {
+        // Search parameter
 
-            this.selectedCategory =
+        const search =
 
-                Number(category);
+            params.get(
 
-            this.loadProducts(
-
-                category
+                'search'
 
             );
 
-        }
+        /*
+        Save values
+        */
 
-        else {
+        this.selectedCategory =
 
-            this.selectedCategory =
+            category
+                ? Number(category)
+                : null;
 
-                null;
+        this.searchKeyword =
 
-            this.loadProducts();
+            search || '';
 
-        }
+        /*
+        Load products using both filters.
+        */
+
+        this.loadProducts(
+
+            this.selectedCategory,
+
+            this.searchKeyword
+
+        );
 
         this.updateCartCount();
 

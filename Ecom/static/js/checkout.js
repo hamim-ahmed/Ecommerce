@@ -40,11 +40,7 @@ function loadCheckoutPage() {
     const subtotal =
         CartService.getCartTotal();
 
-    ...
 
-
-    const subtotal =
-        CartService.getCartTotal();
 
     document.getElementById(
         'subtotal'
