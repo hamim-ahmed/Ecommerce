@@ -496,3 +496,117 @@ Open Drawer
     }
 
 }
+
+
+
+/*======================================================
+DESKTOP CATEGORY DROPDOWN
+======================================================*/
+
+.desktop-menu{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    list-style:none;
+
+    margin:0;
+
+    padding:0;
+
+}
+
+.desktop-menu>li{
+
+    position:relative;
+
+}
+
+.desktop-menu>li>a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:14px 18px;
+
+    text-decoration:none;
+
+    color:#333;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.desktop-menu>li>a:hover{
+
+    color:#2185d0;
+
+}
+
+/*======================================================
+Dropdown
+======================================================*/
+
+.desktop-submenu{
+
+    position:absolute;
+
+    top:100%;
+
+    left:0;
+
+    min-width:220px;
+
+    background:#fff;
+
+    border-radius:8px;
+
+    box-shadow:
+
+        0 8px 25px rgba(0,0,0,.15);
+
+    display:none;
+
+    flex-direction:column;
+
+    padding:10px 0;
+
+    z-index:9999;
+
+}
+
+.desktop-category:hover
+
+.desktop-submenu{
+
+    display:flex;
+
+}
+
+.submenu-item{
+
+    padding:12px 18px;
+
+    text-decoration:none;
+
+    color:#444;
+
+    transition:.2s;
+
+}
+
+.submenu-item:hover{
+
+    background:#f3f6f9;
+
+    color:#2185d0;
+
+}

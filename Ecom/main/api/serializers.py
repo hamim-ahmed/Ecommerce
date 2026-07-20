@@ -50,6 +50,7 @@ from rest_framework import serializers
 #
 from ..models import (
     Category,
+    SubCategory,
     Product,
     Order,
     OrderItem,
@@ -60,35 +61,99 @@ from ..models import (
 
 
 # ==========================================================
-# CATEGORY SERIALIZER
+# SUB CATEGORY SERIALIZER
 # ==========================================================
 
-class CategorySerializer(serializers.ModelSerializer):
-    """
-    Converts Category model into JSON.
-
-    Example Response:
-
-    {
-        "id": 1,
-        "name": "Helmet",
-        "slug": "helmet",
-        "image": "/media/categories/helmet.jpg"
-    }
-    """
+class SubCategorySerializer(
+    serializers.ModelSerializer
+):
 
     class Meta:
 
-        # Model being serialized
+        model = SubCategory
+
+        fields = [
+
+            'id',
+
+            'name',
+
+            'slug',
+
+            'image',
+
+        ]
+
+# ==========================================================
+# CATEGORY SERIALIZER
+# ==========================================================
+
+class CategorySerializer(
+    serializers.ModelSerializer
+):
+
+    """
+    Returns category together
+    with all active subcategories.
+    """
+
+    subcategories = serializers.SerializerMethodField()
+
+    class Meta:
+
         model = Category
 
-        # Fields visible in API response
         fields = [
+
             'id',
+
             'name',
+
             'slug',
+
             'image',
+
+            'subcategories',
+
         ]
+
+    def get_subcategories(
+
+        self,
+
+        obj
+
+    ):
+
+        queryset = (
+
+            obj.subcategories
+
+            .filter(
+
+                is_active=True
+
+            )
+
+            .order_by(
+
+                'display_order',
+
+                'name'
+
+            )
+
+        )
+
+        return SubCategorySerializer(
+
+            queryset,
+
+            many=True,
+
+            context=self.context
+
+        ).data
 
 
 # ==========================================================
@@ -125,6 +190,15 @@ class ProductSerializer(serializers.ModelSerializer):
         source='category.name',
         read_only=True
     )
+    subcategory = serializers.PrimaryKeyRelatedField(
+        read_only=True
+    )
+
+    subcategory_name = serializers.CharField(
+        source='subcategory.name',
+        read_only=True
+    )
+
     main_image = serializers.ImageField(
         read_only=True
     )
@@ -150,6 +224,11 @@ class ProductSerializer(serializers.ModelSerializer):
             'category',
 
             'category_name',
+
+            'subcategory',
+
+            'subcategory_name',
+
         ]
 
 

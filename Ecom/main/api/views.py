@@ -90,8 +90,22 @@ class CategoryListAPIView(generics.ListAPIView):
 
     # Database query
 
-    queryset = Category.objects.filter(
-        is_active=True
+    queryset = (
+
+        Category.objects
+
+        .filter(
+
+            is_active=True
+
+        )
+
+        .prefetch_related(
+
+            'subcategories'
+
+        )
+
     )
 
     # Serializer used to convert
@@ -164,7 +178,9 @@ class ProductListAPIView(
 
         ).select_related(
 
-            'category'
+            'category',
+
+            'subcategory'
 
         )
 
@@ -177,12 +193,23 @@ class ProductListAPIView(
             'category'
 
         )
+        subcategory = self.request.GET.get(
+
+            'subcategory'
+
+        )
 
         if category:
 
             queryset = queryset.filter(
 
                 category_id=category
+
+            )
+        if subcategory:
+            queryset = queryset.filter(
+
+                subcategory_id=subcategory
 
             )
 

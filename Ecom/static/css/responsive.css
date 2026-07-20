@@ -69,3 +69,52 @@
     }
 
 }
+
+
+
+
+.mobile-category-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.mobile-expand-btn{
+
+    cursor:pointer;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+    padding:5px 10px;
+
+}
+
+.mobile-submenu{
+
+    margin-left:18px;
+
+    margin-top:8px;
+
+}
+
+.mobile-submenu li{
+
+    list-style:none;
+
+    margin:10px 0;
+
+}
+
+.mobile-submenu a{
+
+    color:#555;
+
+    text-decoration:none;
+
+}

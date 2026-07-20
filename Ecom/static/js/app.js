@@ -30,6 +30,10 @@ const app = Vue.createApp({
 
             selectedCategory: null,
 
+            selectedSubCategory: null,
+
+            expandedCategory: null,
+
             cartCount: 0,
 
             searchKeyword: '',
@@ -63,6 +67,20 @@ const app = Vue.createApp({
 
                     console.error(error);
                 });
+        },
+
+        toggleCategory(categoryId){
+
+            if(this.expandedCategory === categoryId){
+
+                this.expandedCategory = null;
+
+            }else{
+
+                this.expandedCategory = categoryId;
+
+            }
+
         },
 
         /*
@@ -267,6 +285,8 @@ const app = Vue.createApp({
 
                 this.selectedCategory,
 
+                this.selectedSubCategory,
+
                 keyword
 
             );
@@ -284,7 +304,9 @@ const app = Vue.createApp({
 
                 this.loadProducts(
 
-                    this.selectedCategory
+                    this.selectedCategory,
+
+                    this.selectedSubCategory
 
                 );
 
@@ -460,6 +482,16 @@ const app = Vue.createApp({
 
             );
 
+
+         // SunCategory parameter
+        const subcategory =
+
+            params.get(
+
+                'subcategory'
+
+            );
+
         // Search parameter
 
         const search =
@@ -480,6 +512,14 @@ const app = Vue.createApp({
                 ? Number(category)
                 : null;
 
+        this.selectedSubCategory =
+
+            subcategory
+
+                ? Number(subcategory)
+
+                : null;
+
         this.searchKeyword =
 
             search || '';
@@ -491,6 +531,8 @@ const app = Vue.createApp({
         this.loadProducts(
 
             this.selectedCategory,
+
+            this.selectedSubCategory,
 
             this.searchKeyword
 

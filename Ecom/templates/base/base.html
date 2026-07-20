@@ -170,22 +170,71 @@
             </li>
 
             <li
-
                 v-for="category in categories"
-
                 :key="'mobile-'+category.id"
-
             >
 
-                <a
+                <!-- Category Row -->
 
-                    :href="'/?category=' + category.id"
+                <div class="mobile-category-row">
+
+                    <a
+                        :href="'/?category=' + category.id"
+                    >
+
+                        [[ category.name ]]
+
+                    </a>
+
+                    <span
+
+                        v-if="category.subcategories.length"
+
+                        class="mobile-expand-btn"
+
+                        @click.prevent="toggleCategory(category.id)"
+
+                    >
+
+                        [[ expandedCategory === category.id ? '−' : '+' ]]
+
+                    </span>
+
+                </div>
+
+                <!-- Subcategories -->
+
+                <ul
+
+                    v-if="category.subcategories.length"
+
+                    v-show="expandedCategory === category.id"
+
+                    class="mobile-submenu"
 
                 >
 
-                    [[ category.name ]]
+                    <li
 
-                </a>
+                        v-for="sub in category.subcategories"
+
+                        :key="sub.id"
+
+                    >
+
+                        <a
+
+                            :href="'/?category=' + category.id + '&subcategory=' + sub.id"
+
+                        >
+
+                            [[ sub.name ]]
+
+                        </a>
+
+                    </li>
+
+                </ul>
 
             </li>
 
@@ -482,13 +531,11 @@
 
                 <ul class="desktop-menu">
 
+                    <!-- Home -->
+
                     <li>
 
-                        <a
-
-                            href="/"
-
-                        >
+                        <a href="/">
 
                             Home
 
@@ -496,23 +543,21 @@
 
                     </li>
 
+                    <!-- Categories -->
+
                     <li
 
                         v-for="category in categories"
 
                         :key="category.id"
 
+                        class="desktop-category"
+
                     >
 
                         <a
 
-                            :href="
-
-                                '/?category=' +
-
-                                category.id
-
-                            "
+                            :href="'/?category=' + category.id"
 
                             :class="{
 
@@ -526,7 +571,43 @@
 
                             [[ category.name ]]
 
+                            <i
+
+                                v-if="category.subcategories.length"
+
+                                class="dropdown icon"
+
+                            ></i>
+
                         </a>
+
+                        <!-- Dropdown -->
+
+                        <div
+
+                            v-if="category.subcategories.length"
+
+                            class="desktop-submenu"
+
+                        >
+
+                            <a
+
+                                v-for="sub in category.subcategories"
+
+                                :key="sub.id"
+
+                                :href="'/?category=' + category.id + '&subcategory=' + sub.id"
+
+                                class="submenu-item"
+
+                            >
+
+                                [[ sub.name ]]
+
+                            </a>
+
+                        </div>
 
                     </li>
 

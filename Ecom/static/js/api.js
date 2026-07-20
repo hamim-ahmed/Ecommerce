@@ -135,8 +135,7 @@ getBanners() {
 },
 
 
-
-   /*
+/*
 ==================================================
 GET PRODUCTS
 ==================================================
@@ -145,13 +144,25 @@ Supports:
 
 /api/products/
 
-/api/products/?category=3
+/api/products/?category=2
 
+/api/products/?subcategory=5
+
+/api/products/?search=helmet
+
+/api/products/?category=2&subcategory=5
+
+/api/products/?category=2&subcategory=5&search=helmet
 */
 
 getProducts(
+
     category = null,
+
+    subcategory = null,
+
     search = null
+
 ){
 
     let url =
@@ -159,6 +170,12 @@ getProducts(
         '/api/products/';
 
     const params = [];
+
+    /*
+    --------------------------------------
+    Category
+    --------------------------------------
+    */
 
     if(category){
 
@@ -170,17 +187,49 @@ getProducts(
 
     }
 
+    /*
+    --------------------------------------
+    Sub Category
+    --------------------------------------
+    */
+
+    if(subcategory){
+
+        params.push(
+
+            'subcategory=' + subcategory
+
+        );
+
+    }
+
+    /*
+    --------------------------------------
+    Search
+    --------------------------------------
+    */
+
     if(search){
 
         params.push(
 
             'search=' +
 
-            encodeURIComponent(search)
+            encodeURIComponent(
+
+                search
+
+            )
 
         );
 
     }
+
+    /*
+    --------------------------------------
+    Build Query String
+    --------------------------------------
+    */
 
     if(params.length){
 
@@ -196,53 +245,9 @@ getProducts(
 
 },
 
-    /*
-    -----------------------------------
-    Get Product Detail
-    -----------------------------------
-    */
-
-    // getProduct(slug) {
-    //
-    //     return axios.get(
-    //         `/api/products/${slug}/`
-    //     );
-    // },
 
 
-    getProducts(
-    category = null,
-    search = null
-    ){
-        let url = '/api/products/';
-        const params = [];
 
-        if(category){
-            params.push(
-                'category=' + category
-            );
-        }
-
-        if(search){
-            params.push(
-                'search=' +
-                encodeURIComponent(search)
-            );
-        }
-
-        if(params.length){
-            url += '?' + params.join('&');
-        }
-
-        return axios.get(url);
-    },
-
-    getDeliveryCharges() {
-
-    return axios.get(
-        '/api/delivery-charges/'
-    );
-},
 
     /*
     -----------------------------------
