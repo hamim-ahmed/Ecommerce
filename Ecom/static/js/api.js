@@ -135,6 +135,29 @@ getBanners() {
 },
 
 
+
+/*
+==================================================
+GET DELIVERY CHARGES
+==================================================
+
+Returns all active delivery charge options.
+
+Example:
+
+/api/delivery-charges/
+*/
+
+getDeliveryCharges() {
+
+    return axios.get(
+
+        '/api/delivery-charges/'
+
+    );
+
+},
+
 /*
 ==================================================
 GET PRODUCTS
