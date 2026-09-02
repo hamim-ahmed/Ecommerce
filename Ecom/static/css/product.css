@@ -590,3 +590,69 @@ minmax(250px,1fr)
 }
 
 }
+
+
+
+
+
+/*==================================================
+CART QUANTITY CONTROL
+==================================================*/
+
+.cart-quantity-control{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:5px;
+
+}
+
+
+/*==================================================
+QUANTITY INPUT
+==================================================*/
+
+.cart-quantity-input{
+
+    width:60px;
+
+    height:32px;
+
+    text-align:center;
+
+    border:1px solid #ccc;
+
+    border-radius:4px;
+
+    font-size:15px;
+
+}
+
+
+/*==================================================
+QUANTITY BUTTON
+==================================================*/
+
+.cart-quantity-control button{
+
+    width:32px;
+
+    height:32px;
+
+    padding:0 !important;
+
+    margin:0 !important;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:18px;
+
+}
