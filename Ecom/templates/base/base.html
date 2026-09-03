@@ -53,36 +53,46 @@
     <!-- MOBILE HEADER -->
     <!-- ========================================= -->
 
-    <div class="mobile-header">
+    <!-- ========================================= -->
+<!-- MOBILE HEADER -->
+<!-- ========================================= -->
+
+<div class="mobile-header">
+
+
+    <!-- ===================================== -->
+    <!-- Mobile Header Top Row -->
+    <!-- ===================================== -->
+
+    <div class="mobile-header-top">
+
+
+        <!-- Mobile Menu Button -->
 
         <button
-
             class="mobile-menu-btn"
-
             onclick="toggleMobileMenu()"
-
         >
 
             ☰
 
         </button>
 
+
+
+        <!-- Mobile Logo -->
+
         <a
-
             href="/"
-
             class="mobile-logo"
-
         >
 
             {% if site_settings.logo %}
 
             <img
-
                 src="{{ site_settings.logo.url }}"
-
                 class="site-logo"
-
+                alt="{{ site_settings.site_name }}"
             >
 
             {% endif %}
@@ -95,29 +105,93 @@
 
         </a>
 
-        <a
 
-            href="{% url 'cart' %}"
 
-            class="ui icon button"
+        <!-- Mobile Actions -->
 
-        >
+        <div class="mobile-header-actions">
 
-            <i class="shopping cart icon"></i>
 
-            <span
+            <!-- Track Order -->
 
-                id="cart-count-mobile"
-
-                class="cart-badge"
-
+            <a
+                href="{% url 'track_order' %}"
+                class="ui icon button mobile-track-button"
+                title="Track Order"
             >
 
-                0
+                <i class="shipping fast icon"></i>
 
-            </span>
+            </a>
 
-        </a>
+
+
+            <!-- Cart -->
+
+            <a
+                href="{% url 'cart' %}"
+                class="ui icon button"
+                title="Cart"
+            >
+
+                <i class="shopping cart icon"></i>
+
+                <span
+                    id="cart-count-mobile"
+                    class="cart-badge"
+                >
+
+                    0
+
+                </span>
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ===================================== -->
+    <!-- Mobile Search -->
+    <!-- ===================================== -->
+
+    <div class="mobile-search-section">
+
+            <form
+                @submit.prevent="searchProducts"
+            >
+
+                <div class="ui fluid action input">
+
+
+                    <input
+                        type="text"
+                        v-model="searchKeyword"
+                        @keyup.enter="searchProducts"
+                        placeholder="Search products..."
+                    >
+
+
+                    <button
+                        class="ui primary icon button"
+                        type="submit"
+                    >
+
+                        <i class="search icon"></i>
+
+                    </button>
+
+
+                </div>
+
+            </form>
+
+        </div>
+
 
     </div>
 

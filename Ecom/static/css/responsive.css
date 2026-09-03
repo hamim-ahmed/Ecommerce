@@ -1,46 +1,258 @@
+/* =========================================================
+   MOBILE HEADER
+   ========================================================= */
+
 @media screen and (max-width: 768px) {
 
-    .header-wrapper {
 
-        flex-direction: column;
+    /* -----------------------------------------------------
+       Mobile Header
+       ----------------------------------------------------- */
 
-        align-items: stretch;
+    .mobile-header {
+
+        display: block;
+
+        width: 100%;
+
+        background: #ffffff;
+
+        border-bottom: 1px solid #dddddd;
+
     }
 
-    .logo-section {
+
+    /* -----------------------------------------------------
+       Top Row
+       ----------------------------------------------------- */
+
+    .mobile-header-top {
+
+        display: flex;
+
+        align-items: center;
+
+        width: 100%;
+
+        padding: 8px 10px;
+
+        gap: 8px;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Mobile Menu Button
+       ----------------------------------------------------- */
+
+    .mobile-header-top .mobile-menu-btn {
+
+        display: block;
+
+        flex-shrink: 0;
+
+        border: none;
+
+        background: transparent;
+
+        font-size: 22px;
+
+        cursor: pointer;
+
+        padding: 6px;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Mobile Logo
+       ----------------------------------------------------- */
+
+    .mobile-header-top .mobile-logo {
+
+        display: flex;
+
+        align-items: center;
+
+        flex: 1;
+
+        min-width: 0;
+
+        text-decoration: none;
+
+        color: #111111;
+
+    }
+
+
+    .mobile-header-top .mobile-logo .site-logo {
+
+        width: 40px;
+
+        height: 40px;
+
+        object-fit: contain;
+
+        margin-right: 6px;
+
+    }
+
+
+    .mobile-header-top .mobile-logo span {
+
+        font-size: 18px;
+
+        font-weight: bold;
+
+        line-height: 1.1;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Mobile Actions
+       ----------------------------------------------------- */
+
+    .mobile-header-actions {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 5px;
+
+        flex-shrink: 0;
+
+    }
+
+
+    .mobile-header-actions .ui.button {
+
+        margin: 0;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Track Order Button
+       ----------------------------------------------------- */
+
+    .mobile-track-button {
+
+        display: inline-flex !important;
+
+        align-items: center;
 
         justify-content: center;
+
     }
 
-    .header-actions {
 
-        justify-content: center;
+    /* -----------------------------------------------------
+       Mobile Search
+       ----------------------------------------------------- */
+
+    .mobile-search-section {
+
+        width: 100%;
+
+        padding: 0 10px 10px 10px;
+
     }
+
+
+    .mobile-search-section form {
+
+        width: 100%;
+
+        margin: 0;
+
+    }
+
+
+    .mobile-search-section .ui.input {
+
+        width: 100%;
+
+    }
+
+
+    .mobile-search-section input {
+
+        min-width: 0;
+
+        font-size: 14px;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Desktop Navigation
+       -----------------------------------------------------
+
+       The desktop category navigation should not
+       interfere with the mobile header.
+       */
 
     .desktop-menu {
 
         overflow-x: auto;
 
         white-space: nowrap;
+
     }
 
 }
 
+
+
+/* =========================================================
+   SMALL MOBILE DEVICES
+   ========================================================= */
+
 @media screen and (max-width: 480px) {
 
-    .mobile-menu-btn {
 
-        display: block;
+    .mobile-header-top {
+
+        padding: 7px 8px;
+
+        gap: 5px;
+
     }
 
-    .site-name {
 
-        font-size: 18px;
+    .mobile-header-top .mobile-logo .site-logo {
+
+        width: 36px;
+
+        height: 36px;
+
     }
 
-    .header-actions {
 
-        flex-direction: column;
+    .mobile-header-top .mobile-logo span {
+
+        font-size: 16px;
+
+    }
+
+
+    .mobile-header-actions .ui.button {
+
+        padding: 9px 10px;
+
+    }
+
+
+    .mobile-search-section {
+
+        padding-left: 8px;
+
+        padding-right: 8px;
+
+        padding-bottom: 8px;
+
     }
 
 }
@@ -116,5 +328,174 @@
     color:#555;
 
     text-decoration:none;
+
+}
+
+
+
+/* =========================================================
+   MOBILE WIDTH / OVERFLOW FIX
+   ========================================================= */
+
+@media screen and (max-width: 768px) {
+
+
+    /* -----------------------------------------------------
+       Prevent elements from becoming wider than the screen
+       ----------------------------------------------------- */
+
+    .mobile-header {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        overflow: hidden;
+
+        box-sizing: border-box;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Mobile top row
+       ----------------------------------------------------- */
+
+    .mobile-header-top {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        box-sizing: border-box;
+
+        overflow: hidden;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Logo section
+
+       Allow the logo to shrink when screen is narrow.
+       ----------------------------------------------------- */
+
+    .mobile-header-top .mobile-logo {
+
+        min-width: 0;
+
+        max-width: 100%;
+
+        overflow: hidden;
+
+    }
+
+
+    .mobile-header-top .mobile-logo span {
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Mobile actions
+
+       Prevent Track Order and Cart from pushing
+       outside the screen.
+       ----------------------------------------------------- */
+
+    .mobile-header-actions {
+
+        flex-shrink: 0;
+
+        min-width: 0;
+
+    }
+
+
+    .mobile-header-actions .ui.button {
+
+        flex-shrink: 0;
+
+        box-sizing: border-box;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Mobile search container
+       ----------------------------------------------------- */
+
+    .mobile-search-section {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        box-sizing: border-box;
+
+        overflow: hidden;
+
+    }
+
+
+    .mobile-search-section form {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        box-sizing: border-box;
+
+    }
+
+
+    /* -----------------------------------------------------
+       Semantic UI action input
+
+       This is the important part.
+
+       Without min-width: 0, the input can force the
+       whole action input wider than the phone screen.
+       ----------------------------------------------------- */
+
+    .mobile-search-section .ui.action.input {
+
+        display: flex;
+
+        width: 100%;
+
+        max-width: 100%;
+
+        box-sizing: border-box;
+
+    }
+
+
+    .mobile-search-section .ui.action.input input {
+
+        min-width: 0;
+
+        width: 100%;
+
+        max-width: 100%;
+
+        box-sizing: border-box;
+
+    }
+
+
+    .mobile-search-section .ui.action.input button {
+
+        flex-shrink: 0;
+
+        box-sizing: border-box;
+
+    }
 
 }
