@@ -41,6 +41,8 @@ from .views import (
 
     OrderCreateAPIView,
 
+    PublicOrderTrackingAPIView,
+
     DeliveryChargeListAPIView,
 
     AdminDashboardAPIView,
@@ -163,6 +165,26 @@ urlpatterns = [
         OrderCreateAPIView.as_view(),
 
         name='api_order_create'
+    ),
+
+    # ==================================================
+    # PUBLIC ORDER TRACKING
+    # ==================================================
+    #
+    # GET
+    #
+    # /api/orders/track/?tracking_number=AM-XXXXXXXX
+    #
+    # Allows customers to track their order
+    # without logging in.
+    #
+
+    path(
+        'orders/track/',
+
+        PublicOrderTrackingAPIView.as_view(),
+
+        name='api_order_tracking'
     ),
 
     path(

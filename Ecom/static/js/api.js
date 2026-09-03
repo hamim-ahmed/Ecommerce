@@ -278,7 +278,7 @@ getProducts(
     -----------------------------------
     */
 
-    createOrder(orderData) {
+        createOrder(orderData) {
 
         return axios.post(
             '/api/orders/',
@@ -287,6 +287,34 @@ getProducts(
                 headers: {
                     'X-CSRFToken':
                         getCSRFToken()
+                }
+            }
+        );
+    },
+
+
+    /*
+    -----------------------------------
+    Track Order
+    -----------------------------------
+
+    Sends the customer's tracking number
+    to the public tracking API.
+
+    Example:
+
+        /api/orders/track/
+        ?tracking_number=AM-XXXXXXXX
+    */
+
+    trackOrder(trackingNumber) {
+
+        return axios.get(
+            '/api/orders/track/',
+            {
+                params: {
+                    tracking_number:
+                        trackingNumber
                 }
             }
         );

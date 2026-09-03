@@ -259,21 +259,48 @@ function placeOrder() {
 
     API.createOrder(orderData)
 
-        .then(response => {
+    .then(response => {
 
-            /*
-            Clear Cart
-            */
+        /*
+        -----------------------------------------
+        Save Order Information
+        -----------------------------------------
 
-            CartService.clearCart();
+        The API now returns:
 
-            /*
-            Redirect
-            */
+        {
+            success: true,
+            order_id: 25,
+            tracking_number: "AM-7F92K4D81A3C8E21",
+            message: "Order created successfully."
+        }
 
-            window.location.href =
-                '/order-success/';
-        })
+        We save the tracking number temporarily
+        so the Order Success page can display it.
+        */
+
+        localStorage.setItem(
+            'last_order_tracking_number',
+            response.data.tracking_number
+        );
+
+        /*
+        -----------------------------------------
+        Clear Cart
+        -----------------------------------------
+        */
+
+        CartService.clearCart();
+
+        /*
+        -----------------------------------------
+        Redirect To Success Page
+        -----------------------------------------
+        */
+
+        window.location.href =
+            '/order-success/';
+    })
 
         .catch(error => {
 

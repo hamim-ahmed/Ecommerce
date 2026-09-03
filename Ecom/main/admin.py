@@ -333,6 +333,7 @@ class OrderAdmin(admin.ModelAdmin):
 
     list_display = (
         'id',
+        'tracking_number',
         'customer_name',
         'phone',
         'status',

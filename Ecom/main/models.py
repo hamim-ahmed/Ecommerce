@@ -1,6 +1,29 @@
+import secrets
 from django.db import models
 from django.utils.text import slugify
 
+
+# ==========================================================
+# ORDER TRACKING NUMBER GENERATOR
+# ==========================================================
+
+def generate_tracking_number():
+
+    """
+    Generates a unique-looking public order tracking number.
+
+    Example:
+
+        AM-7F92K4D81A3C8E21
+
+    The tracking number is randomly generated
+    and does not expose the database Order ID.
+    """
+
+    return (
+        'IV-' +
+        secrets.token_hex(8).upper()
+    )
 
 class Category(models.Model):
     """
@@ -262,6 +285,12 @@ class Order(models.Model):
         ('delivered', 'Delivered'),
         ('cancelled', 'Cancelled'),
     ]
+    tracking_number = models.CharField(
+        max_length=30,
+        unique=True,
+        default=generate_tracking_number,
+        editable=False
+    )
 
     customer_name = models.CharField(
         max_length=200

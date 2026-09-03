@@ -1,0 +1,568 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+
+{% block title %}
+
+Track Your Order
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="ui container">
+
+    <!-- ================================================== -->
+    <!-- PAGE HEADER -->
+    <!-- ================================================== -->
+
+    <div class="ui center aligned basic segment">
+
+        <h1 class="ui header">
+
+            <i class="shipping fast icon"></i>
+
+            <div class="content">
+
+                Track Your Order
+
+                <div class="sub header">
+
+                    Enter your tracking number
+                    to check your order status.
+
+                </div>
+
+            </div>
+
+        </h1>
+
+    </div>
+
+
+
+    <!-- ================================================== -->
+    <!-- TRACKING SEARCH -->
+    <!-- ================================================== -->
+
+    <div class="ui centered grid">
+
+        <div class="sixteen wide mobile twelve wide tablet eight wide computer column">
+
+
+            <div class="ui segment">
+
+
+                <div class="ui form">
+
+
+                    <!-- Tracking Number -->
+
+                    <div class="field">
+
+                        <label>
+
+                            Tracking Number
+
+                        </label>
+
+
+                        <div class="ui fluid action input">
+
+                            <input
+                                type="text"
+                                id="tracking-number"
+                                placeholder="Example: AM-7F92K4D81A3C8E21"
+                                autocomplete="off"
+                            >
+
+
+                            <button
+                                type="button"
+                                id="track-order-btn"
+                                class="ui primary button"
+                            >
+
+                                <i class="search icon"></i>
+
+                                Track Order
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Error Message -->
+
+                    <div
+                        id="tracking-error"
+                        class="ui negative message"
+                        style="display: none;"
+                    >
+
+                        <div class="header">
+
+                            Unable to Find Order
+
+                        </div>
+
+                        <p id="tracking-error-text">
+
+                            No order found.
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================================================== -->
+    <!-- ORDER RESULT -->
+    <!-- ================================================== -->
+
+    <div
+        id="tracking-result"
+        style="display: none;"
+    >
+
+
+        <div class="ui centered grid">
+
+            <div class="sixteen wide mobile fourteen wide tablet twelve wide computer column">
+
+
+                <!-- ================================================== -->
+                <!-- ORDER INFORMATION -->
+                <!-- ================================================== -->
+
+                <div class="ui segment">
+
+
+                    <h2 class="ui header">
+
+                        <i class="check circle icon"></i>
+
+                        <div class="content">
+
+                            Order Found
+
+                            <div class="sub header">
+
+                                Your order information
+
+                            </div>
+
+                        </div>
+
+                    </h2>
+
+
+                    <div class="ui divider"></div>
+
+
+                    <!-- Tracking Number -->
+
+                    <div class="ui two column stackable grid">
+
+
+                        <div class="column">
+
+                            <strong>
+
+                                Tracking Number
+
+                            </strong>
+
+                            <div
+                                id="result-tracking-number"
+                                class="ui large text"
+                            >
+
+                                -
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="column">
+
+                            <strong>
+
+                                Order Date
+
+                            </strong>
+
+                            <div
+                                id="result-created-at"
+                                class="ui large text"
+                            >
+
+                                -
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ================================================== -->
+                <!-- CURRENT STATUS -->
+                <!-- ================================================== -->
+
+                <div class="ui segment">
+
+
+                    <h3 class="ui header">
+
+                        Current Order Status
+
+                    </h3>
+
+
+                    <div class="ui center aligned basic segment">
+
+
+                        <div
+                            id="current-status"
+                            class="ui huge label"
+                        >
+
+                            Pending
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ================================================== -->
+                <!-- ORDER STATUS TIMELINE -->
+                <!-- ================================================== -->
+
+                <div class="ui segment">
+
+
+                    <h3 class="ui header">
+
+                        Order Progress
+
+                    </h3>
+
+
+                    <div class="ui divider"></div>
+
+
+                    <!-- Order Placed -->
+
+                    <div
+                        id="status-placed"
+                        class="ui segment"
+                    >
+
+                        <div class="ui grid">
+
+
+                            <div class="three wide center aligned column">
+
+                                <i
+                                    id="status-placed-icon"
+                                    class="large circle outline icon"
+                                ></i>
+
+                            </div>
+
+
+                            <div class="thirteen wide column">
+
+                                <h4 class="ui header">
+
+                                    Order Placed
+
+                                </h4>
+
+                                <p
+                                    id="status-placed-date"
+                                >
+
+                                    -
+
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Confirmed -->
+
+                    <div
+                        id="status-confirmed"
+                        class="ui segment"
+                    >
+
+                        <div class="ui grid">
+
+
+                            <div class="three wide center aligned column">
+
+                                <i
+                                    id="status-confirmed-icon"
+                                    class="large circle outline icon"
+                                ></i>
+
+                            </div>
+
+
+                            <div class="thirteen wide column">
+
+                                <h4 class="ui header">
+
+                                    Order Confirmed
+
+                                </h4>
+
+                                <p
+                                    id="status-confirmed-date"
+                                >
+
+                                    Waiting for confirmation
+
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Processing -->
+
+                    <div
+                        id="status-processing"
+                        class="ui segment"
+                    >
+
+                        <div class="ui grid">
+
+
+                            <div class="three wide center aligned column">
+
+                                <i
+                                    id="status-processing-icon"
+                                    class="large circle outline icon"
+                                ></i>
+
+                            </div>
+
+
+                            <div class="thirteen wide column">
+
+                                <h4 class="ui header">
+
+                                    Order Processing
+
+                                </h4>
+
+                                <p
+                                    id="status-processing-date"
+                                >
+
+                                    Waiting for processing
+
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Delivered -->
+
+                    <div
+                        id="status-delivered"
+                        class="ui segment"
+                    >
+
+                        <div class="ui grid">
+
+
+                            <div class="three wide center aligned column">
+
+                                <i
+                                    id="status-delivered-icon"
+                                    class="large circle outline icon"
+                                ></i>
+
+                            </div>
+
+
+                            <div class="thirteen wide column">
+
+                                <h4 class="ui header">
+
+                                    Order Delivered
+
+                                </h4>
+
+                                <p
+                                    id="status-delivered-date"
+                                >
+
+                                    Waiting for delivery
+
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Cancelled -->
+
+                    <div
+                        id="status-cancelled"
+                        class="ui segment"
+                        style="display: none;"
+                    >
+
+                        <div class="ui grid">
+
+
+                            <div class="three wide center aligned column">
+
+                                <i
+                                    id="status-cancelled-icon"
+                                    class="large times circle outline icon"
+                                ></i>
+
+                            </div>
+
+
+                            <div class="thirteen wide column">
+
+                                <h4 class="ui header">
+
+                                    Order Cancelled
+
+                                </h4>
+
+                                <p
+                                    id="status-cancelled-date"
+                                >
+
+                                    -
+
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ================================================== -->
+                <!-- SEARCH ANOTHER ORDER -->
+                <!-- ================================================== -->
+
+                <div class="ui center aligned basic segment">
+
+
+                    <button
+                        type="button"
+                        id="track-another-btn"
+                        class="ui button"
+                    >
+
+                        <i class="search icon"></i>
+
+                        Track Another Order
+
+                    </button>
+
+
+                    <a
+                        href="/"
+                        class="ui button"
+                    >
+
+                        <i class="home icon"></i>
+
+                        Continue Shopping
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+
+
+
+{% block extra_js %}
+
+<script
+    src="{% static 'js/track_order.js' %}">
+</script>
+
+{% endblock %}

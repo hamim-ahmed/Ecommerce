@@ -4,35 +4,116 @@
 Order Successful
 {% endblock %}
 
+
 {% block content %}
 
 <div class="ui text container">
 
+    <!-- ==================================================
+         ORDER SUCCESS MESSAGE
+         ================================================== -->
+
     <div class="ui positive message">
 
         <div class="header">
-
             Order Placed Successfully
-
         </div>
 
         <p>
-
             Thank you.
-
             Our team will contact you soon.
-
         </p>
 
     </div>
 
-    <a href="/"
-       class="ui primary button">
 
+    <!-- ==================================================
+         ORDER TRACKING INFORMATION
+         ================================================== -->
+
+    <div
+        class="ui raised segment"
+        id="tracking-section"
+    >
+
+        <h3 class="ui header">
+            <i class="shipping fast icon"></i>
+
+            <div class="content">
+                Track Your Order
+
+                <div class="sub header">
+                    Keep this tracking number for future reference or to track your order.
+                </div>
+            </div>
+        </h3>
+
+
+        <!-- Tracking Number -->
+
+        <div class="ui center aligned segment">
+
+            <div class="ui small grey text">
+                Your Order Tracking Number
+            </div>
+
+
+            <h2
+                class="ui header"
+                id="tracking-number"
+            >
+                Loading...
+            </h2>
+
+
+            <button
+                class="ui button"
+                onclick="copyTrackingNumber()"
+            >
+                <i class="copy icon"></i>
+                Copy Tracking Number
+            </button>
+
+        </div>
+
+
+        <!-- Track Order Button -->
+
+        <div class="ui center aligned">
+
+            <a
+                href="/track-order/"
+                class="ui primary button"
+            >
+                <i class="search icon"></i>
+                Track My Order
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         CONTINUE SHOPPING
+         ================================================== -->
+
+    <a
+        href="/"
+        class="ui button"
+    >
+        <i class="shopping bag icon"></i>
         Continue Shopping
-
     </a>
 
 </div>
+
+
+<!-- ==================================================
+     SUCCESS PAGE JAVASCRIPT
+     ================================================== -->
+
+
+
 
 {% endblock %}

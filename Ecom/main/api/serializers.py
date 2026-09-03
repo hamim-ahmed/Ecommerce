@@ -826,6 +826,54 @@ class OrderStatusUpdateSerializer(
         return instance
 
 
+# ==========================================================
+# PUBLIC ORDER TRACKING SERIALIZER
+# ==========================================================
+
+class PublicOrderTrackingSerializer(
+    serializers.ModelSerializer
+):
+    """
+    Used by the public Guest Order Tracking page.
+
+    Customers do NOT need to log in.
+
+    The customer provides their tracking number and
+    receives only the information necessary to track
+    the order.
+
+    IMPORTANT:
+    We intentionally DO NOT expose:
+
+        - Customer phone
+        - Customer address
+        - Customer note
+        - Internal database ID
+        - Other private information
+    """
+
+    class Meta:
+
+        model = Order
+
+        fields = [
+            'tracking_number',
+
+            'status',
+
+            'created_at',
+
+            'confirmed_at',
+
+            'processing_at',
+
+            'delivered_at',
+
+            'cancelled_at',
+
+        ]
+
+
 # ==================================================
 # NOTIFICATION SERIALIZER
 # ==================================================

@@ -55,9 +55,12 @@ from .serializers import (
 
     OrderStatusUpdateSerializer,
 
+    PublicOrderTrackingSerializer,
+
     NotificationSerializer,
 
     BannerSerializer,
+
 )
 
 
@@ -315,13 +318,132 @@ class OrderCreateAPIView(
         return Response(
             {
                 'success': True,
+
+                # Database order ID
                 'order_id': order.id,
+
+                # Public tracking number
+                # This is what the customer will use
+                # to track the order without logging in.
+                'tracking_number': order.tracking_number,
+
                 'message': 'Order created successfully.'
             },
             status=status.HTTP_201_CREATED
         )
 
+# ==========================================================
+# PUBLIC ORDER TRACKING API
+# ==========================================================
+from rest_framework.views import APIView
+class PublicOrderTrackingAPIView(
+    APIView
+):
+    """
+    Public Guest Order Tracking API.
 
+    Customers can track their order without logging in.
+
+    Example:
+
+        GET /api/orders/track/?tracking_number=AM-XXXXXXXX
+
+    Only tracking-related information is returned.
+
+    Customer phone, address and other private information
+    are intentionally NOT exposed.
+    """
+
+    def get(
+        self,
+        request
+    ):
+
+        # --------------------------------------------------
+        # Get tracking number from URL query parameter
+        # --------------------------------------------------
+
+        tracking_number = request.GET.get(
+            'tracking_number'
+        )
+
+
+        # --------------------------------------------------
+        # Validate tracking number
+        # --------------------------------------------------
+
+        if not tracking_number:
+
+            return Response(
+                {
+                    'success': False,
+
+                    'message':
+                        'Tracking number is required.'
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+        # --------------------------------------------------
+        # Clean user input
+        # --------------------------------------------------
+
+        tracking_number = (
+            tracking_number
+            .strip()
+            .upper()
+        )
+
+
+        # --------------------------------------------------
+        # Find order
+        #
+        # We search using the public tracking number,
+        # NOT the database order ID.
+        # --------------------------------------------------
+
+        try:
+
+            order = Order.objects.get(
+                tracking_number=tracking_number
+            )
+
+        except Order.DoesNotExist:
+
+            return Response(
+                {
+                    'success': False,
+
+                    'message':
+                        'No order found with this tracking number.'
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+
+        # --------------------------------------------------
+        # Serialize safe public information
+        # --------------------------------------------------
+
+        serializer = (
+            PublicOrderTrackingSerializer(
+                order
+            )
+        )
+
+
+        # --------------------------------------------------
+        # Return response
+        # --------------------------------------------------
+
+        return Response(
+            {
+                'success': True,
+                'order': serializer.data
+            },
+            status=status.HTTP_200_OK
+        )
 
 # ==========================================================
 # DELIVERY CHARGE LIST API

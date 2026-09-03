@@ -50,6 +50,11 @@ urlpatterns = [
         views.order_success_page,
         name='order_success'
     ),
+    path(
+        'track-order/',
+        views.track_order_page,
+        name='track_order'
+    ),
 
     path(
         'admin-panel/dashboard/',

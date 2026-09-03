@@ -110,6 +110,17 @@ def order_success_page(request):
         'main/order_success.html'
     )
 
+# ==========================================================
+# TRACK ORDER PAGE
+# ==========================================================
+
+def track_order_page(request):
+
+    return render(
+        request,
+        'main/track_order.html'
+    )
+
 def admin_dashboard_page(request):
 
     return render(
