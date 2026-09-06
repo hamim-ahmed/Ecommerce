@@ -216,19 +216,44 @@ const app = Vue.createApp({
 
             category = null,
 
+            subcategory = null,
+
             search = null
 
         ){
+
+            /*
+            --------------------------------------
+            Load Products
+            --------------------------------------
+
+            The API supports three optional filters:
+
+                1. category
+                2. subcategory
+                3. search
+
+            We pass all three values to the API
+            in the correct order.
+            */
 
             API.getProducts(
 
                 category,
 
+                subcategory,
+
                 search
 
             )
 
-            .then(response=>{
+            .then(response => {
+
+                /*
+                ----------------------------------
+                Store returned products
+                ----------------------------------
+                */
 
                 this.products =
 
@@ -236,14 +261,16 @@ const app = Vue.createApp({
 
             })
 
-            .catch(error=>{
+            .catch(error => {
 
-                console.error(error);
+                console.error(
+                    'Error loading products:',
+                    error
+                );
 
             });
 
         },
-
 
         searchProducts() {
 
