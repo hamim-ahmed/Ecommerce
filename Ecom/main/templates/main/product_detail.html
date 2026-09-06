@@ -11,20 +11,127 @@
     <div class="ui stackable grid">
 
         <!-- ================================================= -->
-        <!-- Product Image -->
+        <!-- PRODUCT IMAGE GALLERY -->
         <!-- ================================================= -->
 
         <div class="eight wide column">
 
-            <img
 
-                src="{{ product.main_image.url }}"
+            <!-- ============================================= -->
+            <!-- Main Gallery -->
+            <!-- ============================================= -->
 
-                class="ui fluid rounded image"
+            <div class="product-gallery">
 
-                alt="{{ product.name }}"
 
-            >
+                <!-- ========================================= -->
+                <!-- Main Image Area -->
+                <!-- ========================================= -->
+
+                <div class="product-gallery-main">
+
+
+                    <!-- Main Image -->
+
+                    <img
+                        id="product-main-image"
+                        src="{{ product.main_image.url }}"
+                        alt="{{ product.name }}"
+                    >
+
+
+                    <!-- ===================================== -->
+                    <!-- Previous Button -->
+                    <!-- ===================================== -->
+
+                    <button
+                        type="button"
+                        id="gallery-prev"
+                        class="gallery-arrow gallery-prev"
+                        aria-label="Previous image"
+                    >
+
+                        <i class="chevron left icon"></i>
+
+                    </button>
+
+
+                    <!-- ===================================== -->
+                    <!-- Next Button -->
+                    <!-- ===================================== -->
+
+                    <button
+                        type="button"
+                        id="gallery-next"
+                        class="gallery-arrow gallery-next"
+                        aria-label="Next image"
+                    >
+
+                        <i class="chevron right icon"></i>
+
+                    </button>
+
+
+                </div>
+
+
+                <!-- ============================================= -->
+                <!-- Thumbnail Images -->
+                <!-- ============================================= -->
+
+                <div
+                    class="product-gallery-thumbnails"
+                    id="product-gallery-thumbnails"
+                >
+
+
+                    <!-- ========================================= -->
+                    <!-- Main Image Thumbnail -->
+                    <!-- ========================================= -->
+
+                    <button
+                        type="button"
+                        class="gallery-thumbnail active"
+                        data-image="{{ product.main_image.url }}"
+                        data-index="0"
+                    >
+
+                        <img
+                            src="{{ product.main_image.url }}"
+                            alt="{{ product.name }}"
+                        >
+
+                    </button>
+
+
+                    <!-- ========================================= -->
+                    <!-- Additional Product Images -->
+                    <!-- ========================================= -->
+
+                    {% for gallery_image in product.images.all %}
+
+                        <button
+                            type="button"
+                            class="gallery-thumbnail"
+                            data-image="{{ gallery_image.image.url }}"
+                            data-index="{{ forloop.counter }}"
+                        >
+
+                            <img
+                                src="{{ gallery_image.image.url }}"
+                                alt="{{ product.name }} image {{ forloop.counter }}"
+                            >
+
+                        </button>
+
+                    {% endfor %}
+
+
+                </div>
+
+
+            </div>
+
 
         </div>
 
@@ -212,17 +319,15 @@
 
 <script>
 
-function addCurrentProductToCart(){
+function addCurrentProductToCart() {
 
-    const quantity = Number(
+    const quantity =
+        Number(
+            document.getElementById(
+                'quantity'
+            ).value
+        );
 
-        document.getElementById(
-
-            'quantity'
-
-        ).value
-
-    );
 
     addToCart(
 

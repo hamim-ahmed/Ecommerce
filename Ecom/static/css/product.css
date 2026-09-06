@@ -656,3 +656,280 @@ QUANTITY BUTTON
     font-size:18px;
 
 }
+
+
+
+/* =====================================================
+   PRODUCT GALLERY
+   ===================================================== */
+
+.product-gallery {
+
+    width: 100%;
+
+}
+
+
+/* =====================================================
+   MAIN IMAGE AREA
+   ===================================================== */
+
+.product-gallery-main {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 430px;
+
+    background: #ffffff;
+
+    border-radius: 6px;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+/* =====================================================
+   MAIN IMAGE
+   ===================================================== */
+
+.product-gallery-main img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+}
+
+
+/* =====================================================
+   GALLERY ARROWS
+   ===================================================== */
+
+.gallery-arrow {
+
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 42px;
+
+    height: 42px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 5;
+
+    transition: background 0.2s ease;
+
+}
+
+
+.gallery-arrow:hover {
+
+    background: rgba(0, 0, 0, 0.8);
+
+}
+
+
+.gallery-arrow i {
+
+    margin: 0;
+
+}
+
+
+.gallery-prev {
+
+    left: 12px;
+
+}
+
+
+.gallery-next {
+
+    right: 12px;
+
+}
+
+
+/* =====================================================
+   THUMBNAILS
+   ===================================================== */
+
+.product-gallery-thumbnails {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 12px;
+
+    overflow-x: auto;
+
+    padding-bottom: 5px;
+
+}
+
+
+/* =====================================================
+   INDIVIDUAL THUMBNAIL
+   ===================================================== */
+
+.gallery-thumbnail {
+
+    flex: 0 0 75px;
+
+    width: 75px;
+
+    height: 75px;
+
+    padding: 3px;
+
+    background: #ffffff;
+
+    border: 2px solid #dddddd;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+}
+
+
+.gallery-thumbnail img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+}
+
+
+/* =====================================================
+   ACTIVE THUMBNAIL
+   ===================================================== */
+
+.gallery-thumbnail.active {
+
+    border-color: #2185d0;
+
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media screen and (max-width: 768px) {
+
+
+    .product-gallery-main {
+
+        height: 320px;
+
+    }
+
+
+    .gallery-arrow {
+
+        width: 36px;
+
+        height: 36px;
+
+    }
+
+
+    .gallery-prev {
+
+        left: 8px;
+
+    }
+
+
+    .gallery-next {
+
+        right: 8px;
+
+    }
+
+
+    .gallery-thumbnail {
+
+        flex-basis: 65px;
+
+        width: 65px;
+
+        height: 65px;
+
+    }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+   ===================================================== */
+
+@media screen and (max-width: 480px) {
+
+
+    .product-gallery-main {
+
+        height: 280px;
+
+    }
+
+
+    .gallery-thumbnail {
+
+        flex-basis: 60px;
+
+        width: 60px;
+
+        height: 60px;
+
+    }
+
+
+    .product-gallery-thumbnails {
+
+        gap: 7px;
+
+    }
+
+}
