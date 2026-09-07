@@ -933,3 +933,139 @@ QUANTITY BUTTON
     }
 
 }
+
+
+/* =====================================================
+   RELATED PRODUCTS
+   ===================================================== */
+
+/*
+---------------------------------------------------------
+Desktop
+
+Keep related product cards at a reasonable width
+instead of allowing them to stretch across the page.
+---------------------------------------------------------
+*/
+
+.related-products .products-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(220px, 260px)
+        );
+
+    gap: 22px;
+
+    justify-content: start;
+
+}
+
+
+
+/*
+---------------------------------------------------------
+Related Product Images
+---------------------------------------------------------
+
+Keep the image proportional and prevent it from
+becoming excessively large.
+---------------------------------------------------------
+*/
+
+.related-products .product-image {
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+
+}
+
+
+
+/*
+---------------------------------------------------------
+Related Product Image
+---------------------------------------------------------
+*/
+
+.related-products .product-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+
+/*
+=========================================================
+TABLET
+=========================================================
+*/
+
+@media (max-width: 992px) {
+
+    .related-products .products-grid {
+
+        grid-template-columns:
+            repeat(
+                auto-fill,
+                minmax(200px, 240px)
+            );
+
+        gap: 18px;
+
+    }
+
+}
+
+
+
+/*
+=========================================================
+MOBILE
+=========================================================
+*/
+
+@media (max-width: 768px) {
+
+    .related-products .products-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 14px;
+
+    }
+
+}
+
+
+
+/*
+=========================================================
+SMALL MOBILE
+=========================================================
+*/
+
+@media (max-width: 480px) {
+
+    .related-products .products-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+
+    }
+
+}
